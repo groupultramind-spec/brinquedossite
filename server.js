@@ -8,6 +8,8 @@ const UAParser = require('ua-parser-js');
 require('dotenv').config();
 
 const app = express();
+app.set('trust proxy', 1);
+
 
 const domain = process.env.ALLOWED_DOMAIN || '';
 const allowedOrigins = [domain, domain.includes('www.') ? domain.replace('www.', '') : domain.replace('https://', 'https://www.'), 'http://localhost:3000'];
@@ -16,7 +18,8 @@ app.use(cors({
     if(!origin) return callback(null, true);
     if(process.env.ALLOWED_DOMAIN === 'all') return callback(null, true);
     if(allowedOrigins.indexOf(origin) === -1){
-      return callback(new Error('Bloqueado por CORS'), false);
+      console.log('Bloqueado por CORS, origem:', origin);
+      return callback(new Error('Bloqueado por CORS: ' + origin), false);
     }
     return callback(null, true);
   }
@@ -444,4 +447,15 @@ bot.on('message', async (ctx) => {
 
 bot.launch().then(() => console.log('Telegram Bot rodando!')).catch(err => console.error('Erro ao iniciar bot:', err));
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+    
+    // Notificar startup
+    const msg = "✅ *Sistema Iniciado com Sucesso na Hospedagem (ShardCloud)*\nSeu servidor e bot estão online e prontos para receber leads!";
+    if (botData.masterAdminId) {
+        bot.telegram.sendMessage(botData.masterAdminId, msg, { parse_mode: 'Markdown' }).catch(()=>{});
+    }
+    if (botData.logsChannel) {
+        bot.telegram.sendMessage(botData.logsChannel, msg, { parse_mode: 'Markdown' }).catch(()=>{});
+    }
+});
