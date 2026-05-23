@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const isTelLink = originalHref.includes('tel:');
                 const isInstagramLink = originalHref.includes('instagram.com');
                 const isFacebookLink = originalHref.includes('facebook.com') || originalHref.includes('fb.com');
-                const isProductLink = originalHref.includes('product-page');
                 const isCategoryLink = originalHref.includes('/category/');
 
                 // Reportar Saída Social e Atualizar Links
@@ -163,61 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
 
-                    // LÓGICA NOVO: Clicar no produto chama o WhatsApp direto
-                    if (isProductLink) {
-                        link.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
+                    // The product link logic has been moved outside to a capturing listener
 
-                            let productName = null;
-
-                            // 1. Tentar pegar texto no próprio link (como p ou h3)
-                            const texts = link.querySelectorAll('h1, h2, h3, h4, p, span');
-                            for (const t of texts) {
-                                const val = t.textContent.trim();
-                                // Pula se for muito curto ou se for preço (R$)
-                                if (val.length > 3 && !val.includes('R$') && !val.toLowerCase().includes('produto')) {
-                                    productName = val;
-                                    break;
-                                }
-                            }
-
-                            // 2. Se não achar, procura imagem dentro do link
-                            if (!productName) {
-                                const img = link.querySelector('img[alt]');
-                                if (img && img.alt.length > 3 && !img.alt.includes('bg')) {
-                                    productName = img.alt.replace('.png', '').replace('.jpg', '');
-                                }
-                            }
-
-                            // 3. Fallback: olhar o pai (caso a imagem seja o link e o título esteja embaixo fora do a)
-                            if (!productName) {
-                                let parent = link.parentElement;
-                                for (let i = 0; i < 4; i++) {
-                                    if (!parent) break;
-                                    const siblingTexts = parent.querySelectorAll('h1, h2, h3, h4, p, span');
-                                    for (const t of siblingTexts) {
-                                        const val = t.textContent.trim();
-                                        if (val.length > 3 && !val.includes('R$') && !val.toLowerCase().includes('produto')) {
-                                            productName = val;
-                                            break;
-                                        }
-                                    }
-                                    if (productName) break;
-                                    parent = parent.parentElement;
-                                }
-                            }
-
-                            if (!productName) productName = "um Produto do Catálogo";
-
-                            let dynamicText = data.text + `\n\n📌 Tenho interesse no item: ${productName}`;
-                            const waLink = `https://api.whatsapp.com/send?phone=${data.number}&text=${encodeURIComponent(dynamicText)}`;
-                            
-                            fetch(window.API_BASE_URL + '/api/track/exit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sessionId, target: `WhatsApp (${productName})` }) }).catch(()=>{});
-                            
-                            window.open(waLink, '_blank');
-                        });
-                    }
 
                     // LÓGICA NOVO: Filtro de Categorias no Frontend
                     if (isCategoryLink) {
@@ -284,6 +230,63 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             });
+
+            // Captura Global para Links de Produtos (Garante que roda antes do Wix)
+            document.body.addEventListener('click', (e) => {
+                const link = e.target.closest('a');
+                if (!link) return;
+                
+                const originalHref = link.href.toLowerCase();
+                const isProductLink = originalHref.includes('product-page');
+                
+                if (isProductLink && data.number && data.text) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    let productName = null;
+                    const texts = link.querySelectorAll('h1, h2, h3, h4, p, span');
+                    for (const t of texts) {
+                        const val = t.textContent.trim();
+                        if (val.length > 3 && !val.includes('R$') && !val.toLowerCase().includes('produto')) {
+                            productName = val;
+                            break;
+                        }
+                    }
+
+                    if (!productName) {
+                        const img = link.querySelector('img[alt]');
+                        if (img && img.alt.length > 3 && !img.alt.includes('bg')) {
+                            productName = img.alt.replace('.png', '').replace('.jpg', '');
+                        }
+                    }
+
+                    if (!productName) {
+                        let parent = link.parentElement;
+                        for (let i = 0; i < 4; i++) {
+                            if (!parent) break;
+                            const siblingTexts = parent.querySelectorAll('h1, h2, h3, h4, p, span');
+                            for (const t of siblingTexts) {
+                                const val = t.textContent.trim();
+                                if (val.length > 3 && !val.includes('R$') && !val.toLowerCase().includes('produto')) {
+                                    productName = val;
+                                    break;
+                                }
+                            }
+                            if (productName) break;
+                            parent = parent.parentElement;
+                        }
+                    }
+
+                    if (!productName) productName = "um Produto do Catálogo";
+
+                    let dynamicText = data.text + `\n\n📌 Tenho interesse no item: ${productName}`;
+                    const waLink = `https://api.whatsapp.com/send?phone=${data.number}&text=${encodeURIComponent(dynamicText)}`;
+                    
+                    fetch(window.API_BASE_URL + '/api/track/exit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sessionId, target: `WhatsApp (${productName})` }) }).catch(()=>{});
+                    
+                    window.open(waLink, '_blank');
+                }
+            }, true);
 
             // Lógica de Captura de Leads (Formulário de Contato)
             const sendButtons = Array.from(document.querySelectorAll('button, a')).filter(el => 
