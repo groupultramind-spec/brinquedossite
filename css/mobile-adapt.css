@@ -1,0 +1,61 @@
+@media screen and (max-width: 768px) {
+    /* 1. Reset da Tela */
+    html, body {
+        overflow-x: hidden !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* 2. Forcar containers principais a caber na tela */
+    #SITE_CONTAINER, .SITE_ROOT, #masterPage, #PAGES_CONTAINER, main, .wixui-section {
+        width: 100vw !important;
+        min-width: 100vw !important;
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 3. Remover posicoes absolutas travadas da Wix */
+    div[id^="comp-"] {
+        position: relative !important;
+        left: 0 !important;
+        right: 0 !important;
+        top: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        box-sizing: border-box !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* 4. Adaptar grade de produtos (Flexbox Vertical) */
+    div[data-mesh-id] {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        height: auto !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 5. Ajustar midias para nao vazarem a borda */
+    img, video, iframe {
+        max-width: 100% !important;
+        height: auto !important;
+        object-fit: contain !important;
+    }
+
+    /* 6. Textos legiveis */
+    p, span, h1, h2, h3, h4, h5, h6 {
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        max-width: 100% !important;
+    }
+
+    /* 7. Esconder os vazios absolutos que causam buracos no celular */
+    div[id^="comp-"]:empty {
+        display: none !important;
+    }
+}
