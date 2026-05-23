@@ -9,7 +9,8 @@ require('dotenv').config();
 
 const app = express();
 
-const allowedOrigins = [process.env.ALLOWED_DOMAIN, 'http://localhost:3000'];
+const domain = process.env.ALLOWED_DOMAIN || '';
+const allowedOrigins = [domain, domain.includes('www.') ? domain.replace('www.', '') : domain.replace('https://', 'https://www.'), 'http://localhost:3000'];
 app.use(cors({
   origin: function(origin, callback){
     if(!origin) return callback(null, true);
