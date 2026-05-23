@@ -214,7 +214,7 @@ app.use(express.static(__dirname));
 
 app.get('/combos', (req, res) => res.sendFile(path.join(__dirname, 'combos', 'index.html')));
 app.get('/informacao', (req, res) => res.sendFile(path.join(__dirname, 'informacao', 'index.html')));
-app.get('/contact-9', (req, res) => res.sendFile(path.join(__dirname, 'contatos', 'index.html')));
+app.get('/contact-9', (req, res) => res.sendFile(path.join(__dirname, 'contact-9', 'index.html')));
 
 
 // === TELEGRAM BOT ===
