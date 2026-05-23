@@ -379,8 +379,7 @@ bot.on('message', async (ctx) => {
         const text = ctx.message.text.trim();
         if (state === 'WAITING_NUMBER') {
             botData.whatsappNumber = text.replace(/\D/g, ''); saveData();
-            const currentDomain = process.env.ALLOWED_DOMAIN || 'https://seu-site.com.br';
-            ctx.reply(`✅ Número atualizado no site:\n${currentDomain}`, Markup.inlineKeyboard([[Markup.button.callback('🔙 Voltar ao Início', 'view_config')]]));
+            ctx.reply(`✅ Número atualizado com sucesso no site!\n🔗 https://brinquedosemcasa.com.br`, Markup.inlineKeyboard([[Markup.button.callback('🔙 Voltar ao Início', 'view_config')]]));
         } else if (state === 'WAITING_TEXT') {
             botData.whatsappText = text; saveData();
             ctx.reply(`✅ Texto atualizado!`, Markup.inlineKeyboard([[Markup.button.callback('🔙 Voltar ao Início', 'view_config')]]));

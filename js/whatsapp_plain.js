@@ -23,10 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             if(data.number) {
                 const formatPhoneNumber = (num) => {
-                    const str = num.replace(/\D/g, '');
-                    if(str.length >= 10 && str.startsWith('55')) {
-                        const ddd = str.substring(2,4);
-                        const prefix = str.length === 13 ? str.substring(4,9) : str.substring(4,8);
+                    let str = num.replace(/\D/g, '');
+                    if (str.startsWith('55') && str.length >= 12) str = str.substring(2);
+                    if(str.length >= 10) {
+                        const ddd = str.substring(0,2);
+                        const prefix = str.length === 11 ? str.substring(2,7) : str.substring(2,6);
                         const suffix = str.substring(str.length - 4);
                         return `(${ddd}) ${prefix}-${suffix}`;
                     }
@@ -39,12 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const walkDom = (node) => {
                     if(node.nodeType === 3) {
                         const val = node.nodeValue;
-                        if(val.includes('96439')) {
+                        if(val.includes('96439') || val.includes('(11)')) {
                             node.nodeValue = val
-                                .replace('(11) 96439-9707', formattedNum)
-                                .replace('(11)964399707', formattedNum)
-                                .replace('96439-9707', formattedNum)
-                                .replace('964399707', formattedNum);
+                                .replace(/\(11\)\s*96439-?9707/g, formattedNum)
+                                .replace(/\(11\)\s*964399707/g, formattedNum)
+                                .replace(/11964399707/g, formattedNum)
+                                .replace(/96439-?9707/g, formattedNum);
                         }
                         if (data.location && (val.includes('Silva Lisboa') || val.includes('Nhocuné'))) {
                             node.nodeValue = data.location;
@@ -82,13 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Lógica original do WhatsApp
                 if (data.number && data.text) {
-                    let displayPhone = data.number;
-                    if(displayPhone.startsWith('55') && displayPhone.length === 13) {
-                        displayPhone = `(${displayPhone.substring(2,4)}) ${displayPhone.substring(4,9)}-${displayPhone.substring(9)}`;
+                    let cleanPhone = data.number.replace(/\D/g, '');
+                    if (!cleanPhone.startsWith('55') && cleanPhone.length >= 10) {
+                        cleanPhone = '55' + cleanPhone;
                     }
+                    const displayPhone = formatPhoneNumber(cleanPhone);
 
                     if (isTelLink && link.textContent.match(/\d{4}/)) {
-                        link.href = `tel:+${data.number}`;
+                        link.href = `tel:+${cleanPhone}`;
                         
                         function replaceTextInNodes(node, newText) {
                             if (node.nodeType === 3 && node.nodeValue.match(/\d{4}/)) {
