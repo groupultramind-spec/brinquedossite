@@ -303,11 +303,21 @@
     // Anti-letras no telefone em tempo real
     document.body.addEventListener('input', (e) => {
         if (e.target.tagName === 'INPUT') {
-            const labelText = (e.target.getAttribute('aria-label') || e.target.name || e.target.type || e.target.placeholder || e.target.id || '').toLowerCase();
-            if (labelText.includes('telefone') || labelText.includes('celular') || e.target.type === 'tel' || labelText.includes('phone')) {
+            const attrText = (e.target.getAttribute('aria-label') || e.target.name || e.target.type || e.target.placeholder || e.target.id || '').toLowerCase();
+            const parentText = (e.target.parentElement ? e.target.parentElement.innerText : '').toLowerCase();
+            const grandParentText = (e.target.parentElement && e.target.parentElement.parentElement ? e.target.parentElement.parentElement.innerText : '').toLowerCase();
+            
+            if (attrText.includes('telefone') || attrText.includes('celular') || attrText.includes('phone') || e.target.type === 'tel' ||
+                parentText.includes('telefone') || parentText.includes('celular') ||
+                grandParentText.includes('telefone') || grandParentText.includes('celular')) {
+                
                 const clean = e.target.value.replace(/\D/g, '');
                 if (e.target.value !== clean) {
                     e.target.value = clean;
+                    // Trigger React onChange se necessario
+                    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+                    if (nativeInputValueSetter) { nativeInputValueSetter.call(e.target, clean); }
+                    e.target.dispatchEvent(new Event('input', { bubbles: true }));
                 }
             }
         }
