@@ -27,7 +27,7 @@ const apiLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 2000 }); // Aument
 app.use('/api/', apiLimiter);
 
 const DATA_FILE = path.join(__dirname, 'data.json');
-let botData = { whatsappNumber: '', whatsappText: '', instagramUrl: '', facebookUrl: '', leadChannelId: '', masterAdminId: '', admins: [], visits: 0, exits: 0 };
+let botData = { whatsappNumber: '', whatsappText: '', instagramUrl: '', facebookUrl: '', location: '', leadChannelId: '', masterAdminId: '', admins: [], visits: 0, exits: 0 };
 
 if (fs.existsSync(DATA_FILE)) {
     const rawData = fs.readFileSync(DATA_FILE, 'utf8').replace(/^\uFEFF/, '');
@@ -96,7 +96,8 @@ app.get('/api/whatsapp', (req, res) => {
         number: botData.whatsappNumber,
         text: botData.whatsappText,
         instagramUrl: botData.instagramUrl,
-        facebookUrl: botData.facebookUrl
+        facebookUrl: botData.facebookUrl,
+        location: botData.location
     });
 });
 
@@ -231,7 +232,7 @@ function getMenuMarkup(isMaster) {
     const buttons = [
         [Markup.button.callback('📱 WhatsApp', 'edit_whatsapp'), Markup.button.callback('📢 Leads & Radar', 'edit_channel')],
         [Markup.button.callback('📸 Instagram', 'edit_instagram'), Markup.button.callback('📘 Facebook', 'edit_facebook')],
-        [Markup.button.callback('📈 Estatísticas', 'view_stats')]
+        [Markup.button.callback('📍 Localização', 'edit_location'), Markup.button.callback('📈 Estatísticas', 'view_stats')]
     ];
     if (isMaster) {
         buttons.push([Markup.button.callback('➕ Add Admin', 'add_admin'), Markup.button.callback('➖ Rem Admin', 'remove_admin')]);
@@ -241,7 +242,7 @@ function getMenuMarkup(isMaster) {
 
 bot.use((ctx, next) => { if (ctx.from && !isAdmin(ctx)) return; return next(); });
 
-const buildStatusMsg = () => `🌟 *PAINEL DE CONTROLE* 🌟\n\n🔹 *Status:* 🟢 Online\n📞 *WhatsApp:* \`${botData.whatsappNumber||'Nenhum'}\`\n📸 *Instagram:* \`${botData.instagramUrl||'Nenhum'}\`\n📘 *Facebook:* \`${botData.facebookUrl||'Nenhum'}\`\n📢 *Canal Leads:* \`${botData.leadChannelId||'Nenhum'}\`\n\n_Selecione:_`;
+const buildStatusMsg = () => `🌟 *PAINEL DE CONTROLE* 🌟\n\n🔹 *Status:* 🟢 Online\n📞 *WhatsApp:* \`${botData.whatsappNumber||'Nenhum'}\`\n📸 *Instagram:* \`${botData.instagramUrl||'Nenhum'}\`\n📘 *Facebook:* \`${botData.facebookUrl||'Nenhum'}\`\n📍 *Localização:* \`${botData.location||'Padrão'}\`\n📢 *Canal Leads:* \`${botData.leadChannelId||'Nenhum'}\`\n\n_Selecione:_`;
 
 bot.command('start', (ctx) => {
     userStates.delete(ctx.from.id);
@@ -262,6 +263,11 @@ bot.action('edit_whatsapp', (ctx) => {
 
 bot.action('view_stats', (ctx) => {
     ctx.editMessageText(`📈 *ESTATÍSTICAS* 📈\n\n👁 *Visitas Totais:* ${botData.visits}\n🚪 *Cliques no WhatsApp:* ${botData.exits}\n👥 *Visitantes Online Agora:* ${activeSessions.size}`, { parse_mode: 'Markdown', ...Markup.inlineKeyboard([[Markup.button.callback('🔙 Voltar ao Início', 'view_config')]]) }).catch(()=>{});
+});
+
+bot.action('edit_location', (ctx) => {
+    userStates.set(ctx.from.id, 'WAITING_CEP');
+    ctx.editMessageText('📍 *Mudar Localização*\n\nDigite apenas o CEP do seu endereço (ex: 01001-000 ou 01001000):', { parse_mode: 'Markdown', ...Markup.inlineKeyboard([[Markup.button.callback('🔙 Voltar ao Início', 'view_config')]]) });
 });
 
 bot.action('edit_number', (ctx) => {
@@ -383,6 +389,53 @@ bot.on('message', async (ctx) => {
             ctx.telegram.editMessageText(ctx.chat.id, loadingMsg.message_id, null, `❓ *Verificação*\nNome: *${title}*\nLink: \`${url}\`\n\nConfirmar?`, {
                 parse_mode: 'Markdown', ...Markup.inlineKeyboard([[Markup.button.callback('✅ Confirmar', `confirm_${network}`)], [Markup.button.callback('❌ Cancelar', 'cancel_link')]])
             });
+        } else if (state === 'WAITING_CEP') {
+            const cep = text.replace(/\D/g, '');
+            if (cep.length !== 8) return ctx.reply('⚠️ CEP inválido. Digite 8 números (ex: 01001000):');
+            try {
+                const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = await response.json();
+                if (data.erro) throw new Error("CEP não encontrado");
+                
+                const partialAddressObj = {
+                    logradouro: data.logradouro || '',
+                    bairro: data.bairro || '',
+                    localidade: data.localidade || '',
+                    uf: data.uf || ''
+                };
+                pendingLinks.set(ctx.from.id, JSON.stringify(partialAddressObj));
+                
+                let locationString = `${data.logradouro ? data.logradouro + ', ' : ''}${data.bairro ? '(' + data.bairro + '), ' : ''}${data.localidade}, ${data.uf}`;
+                
+                userStates.set(ctx.from.id, 'WAITING_ADDRESS_NUMBER');
+                if (data.logradouro) {
+                    ctx.reply(`📍 Endereço encontrado:\n*${locationString}*\n\nDigite agora apenas o **número** do local (e complemento se houver):`, { parse_mode: 'Markdown' });
+                } else {
+                    ctx.reply(`📍 CEP geral da cidade:\n*${locationString}*\n\nDigite agora o **nome da rua e o número**:`, { parse_mode: 'Markdown' });
+                }
+            } catch (err) {
+                userStates.set(ctx.from.id, 'WAITING_FULL_ADDRESS');
+                ctx.reply('⚠️ CEP não encontrado de forma automática.\n\nDigite o endereço completo manualmente (ex: Rua X, 123 - Bairro Y, Cidade, SP):');
+            }
+            return; // Don't delete state yet
+        } else if (state === 'WAITING_ADDRESS_NUMBER') {
+            const objStr = pendingLinks.get(ctx.from.id);
+            let finalAddress = text;
+            if (objStr && objStr.startsWith('{')) {
+                const obj = JSON.parse(objStr);
+                if (obj.logradouro) {
+                    finalAddress = `${obj.logradouro} ${text}${obj.bairro ? ' (' + obj.bairro + ')' : ''}, ${obj.localidade}, ${obj.uf}`;
+                } else {
+                    finalAddress = `${text}${obj.bairro ? ' (' + obj.bairro + ')' : ''}, ${obj.localidade}, ${obj.uf}`;
+                }
+            }
+            botData.location = finalAddress;
+            saveData();
+            ctx.reply(`✅ Endereço atualizado no site para:\n${finalAddress}`, Markup.inlineKeyboard([[Markup.button.callback('🔙 Voltar ao Início', 'view_config')]]));
+        } else if (state === 'WAITING_FULL_ADDRESS') {
+            botData.location = text;
+            saveData();
+            ctx.reply(`✅ Endereço atualizado no site para:\n${text}`, Markup.inlineKeyboard([[Markup.button.callback('🔙 Voltar ao Início', 'view_config')]]));
         }
     }
     userStates.delete(ctx.from.id);

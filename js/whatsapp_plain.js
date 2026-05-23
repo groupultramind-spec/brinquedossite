@@ -38,8 +38,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Update visual text nodes that contain the old hardcoded number
                 const walkDom = (node) => {
                     if(node.nodeType === 3) {
-                        if(node.nodeValue.includes('96439') || node.nodeValue.includes('96439-9707')) {
-                            node.nodeValue = node.nodeValue.replace(/(?:\(\d{2}\))?\s*96439-9707/g, formattedNum).replace(/964399707/g, formattedNum);
+                        const val = node.nodeValue;
+                        if(val.includes('96439')) {
+                            node.nodeValue = val
+                                .replace('(11) 96439-9707', formattedNum)
+                                .replace('(11)964399707', formattedNum)
+                                .replace('96439-9707', formattedNum)
+                                .replace('964399707', formattedNum);
+                        }
+                        if (data.location && (val.includes('Silva Lisboa') || val.includes('Nhocuné'))) {
+                            node.nodeValue = data.location;
                         }
                     } else if (node.nodeType === 1 && node.nodeName !== 'SCRIPT' && node.nodeName !== 'STYLE') {
                         node.childNodes.forEach(walkDom);
