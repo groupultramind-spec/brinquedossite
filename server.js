@@ -167,10 +167,25 @@ app.post('/api/track/exit', (req, res) => {
 
 app.post('/api/contact', async (req, res) => {
     const { nome, sobrenome, email, telefone, mensagem } = req.body;
+    
+    // Validações no Backend
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return res.json({ success: false, error: 'E-mail inválido.' });
+    
+    const tempDomains = ['tempmail.com', '10minutemail.com', 'guerrillamail.com', 'yopmail.com', 'mailinator.com', 'temp-mail.org', 'tempmail.net', 'dispostable.com'];
+    const domain = email.split('@')[1];
+    if (domain && tempDomains.some(td => domain.includes(td))) return res.json({ success: false, error: 'E-mails temporários não são aceitos.' });
+
+    if (!mensagem || mensagem.length < 10 || mensagem.length > 1000) return res.json({ success: false, error: 'A mensagem deve ter entre 10 e 1000 caracteres.' });
+
+    const cleanPhone = telefone.replace(/\D/g, '');
+    if (cleanPhone.length < 10 || cleanPhone.length > 11) return res.json({ success: false, error: 'Telefone inválido. Insira o DDD e o número válido.' });
+
     if(botData.leadChannelId) {
         const textMsg = `🎯 *NOVO LEAD RECEBIDO* 🎯\n\n👤 *Nome:* ${nome} ${sobrenome}\n✉️ *Email:* ${email}\n📱 *Telefone:* ${telefone}\n📝 *Mensagem:* ${mensagem}`;
+        const keyboard = Markup.inlineKeyboard([[Markup.button.url('📲 Chamar no WhatsApp', `https://wa.me/55${cleanPhone}`)]]);
         try {
-            await bot.telegram.sendMessage(botData.leadChannelId, textMsg, { parse_mode: 'Markdown' });
+            await bot.telegram.sendMessage(botData.leadChannelId, textMsg, { parse_mode: 'Markdown', ...keyboard });
             return res.json({ success: true });
         } catch (e) {
             console.error('Erro ao enviar pro canal:', e);
@@ -354,7 +369,8 @@ bot.on('message', async (ctx) => {
         const text = ctx.message.text.trim();
         if (state === 'WAITING_NUMBER') {
             botData.whatsappNumber = text.replace(/\D/g, ''); saveData();
-            ctx.reply(`✅ Número atualizado!`, Markup.inlineKeyboard([[Markup.button.callback('🔙 Voltar ao Início', 'view_config')]]));
+            const currentDomain = process.env.ALLOWED_DOMAIN || 'https://seu-site.com.br';
+            ctx.reply(`✅ Número atualizado no site:\n${currentDomain}`, Markup.inlineKeyboard([[Markup.button.callback('🔙 Voltar ao Início', 'view_config')]]));
         } else if (state === 'WAITING_TEXT') {
             botData.whatsappText = text; saveData();
             ctx.reply(`✅ Texto atualizado!`, Markup.inlineKeyboard([[Markup.button.callback('🔙 Voltar ao Início', 'view_config')]]));

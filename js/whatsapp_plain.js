@@ -307,6 +307,24 @@ document.addEventListener('DOMContentLoaded', () => {
                         e.preventDefault(); 
                         e.stopPropagation();
 
+                        // Validações no Frontend
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(leadData.email)) {
+                            alert("Por favor, insira um e-mail válido.");
+                            return;
+                        }
+
+                        const cleanPhone = leadData.telefone.replace(/\D/g, '');
+                        if (cleanPhone.length < 10 || cleanPhone.length > 11) {
+                            alert("O telefone deve ter DDD + Número (Ex: 11999999999).");
+                            return;
+                        }
+
+                        if (!leadData.mensagem || leadData.mensagem.length < 10 || leadData.mensagem.length > 1000) {
+                            alert("A mensagem deve ter entre 10 e 1000 caracteres.");
+                            return;
+                        }
+
                         btn.textContent = 'Enviando...';
                         btn.style.opacity = '0.7';
 
@@ -317,6 +335,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         })
                         .then(res => res.json())
                         .then(resData => {
+                            if (!resData.success) {
+                                alert("Erro: " + (resData.error || "Dados inválidos."));
+                                btn.textContent = 'Enviar';
+                                btn.style.opacity = '1';
+                                return;
+                            }
                             btn.textContent = 'Enviado com Sucesso!';
                             btn.style.backgroundColor = '#4CAF50';
                             inputs.forEach(i => i.value = ''); 
