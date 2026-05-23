@@ -1,4 +1,15 @@
 (function() {
+    // 1. Anti-Copia e Segurança
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('selectstart', e => { if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault() });
+    document.addEventListener('dragstart', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+        if (e.keyCode === 123) e.preventDefault(); // F12
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 73) e.preventDefault(); // Ctrl+Shift+I
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 74) e.preventDefault(); // Ctrl+Shift+J
+        if (e.ctrlKey && e.keyCode === 85) e.preventDefault(); // Ctrl+U
+    });
+
     // Sistema de Toast (Notificação Animada)
     const style = document.createElement('style');
     style.innerHTML = `
@@ -126,23 +137,24 @@
                 let hasData = false;
 
                 inputs.forEach(input => {
-                    const placeholder = (input.placeholder || '').toLowerCase();
+                    const labelText = (input.getAttribute('aria-label') || input.name || input.type || input.placeholder || input.id || '').toLowerCase();
                     const val = input.value.trim();
                     if (!val) return;
-                    if (placeholder.includes('nome') && !placeholder.includes('sobrenome')) { leadData.nome = val; hasData = true; }
-                    else if (placeholder.includes('sobrenome')) { leadData.sobrenome = val; hasData = true; }
-                    else if (placeholder.includes('email')) { leadData.email = val; hasData = true; }
-                    else if (placeholder.includes('telefone') || placeholder.includes('celular')) { leadData.telefone = val; hasData = true; }
-                    else if (input.tagName.toLowerCase() === 'textarea' || placeholder.includes('mensagem')) { leadData.mensagem = val; hasData = true; }
+                    if (labelText.includes('nome') && !labelText.includes('sobrenome')) { leadData.nome = val; hasData = true; }
+                    else if (labelText.includes('sobrenome')) { leadData.sobrenome = val; hasData = true; }
+                    else if (labelText.includes('email') || input.type === 'email' || input.name === 'email') { leadData.email = val; hasData = true; }
+                    else if (labelText.includes('telefone') || labelText.includes('celular') || input.type === 'tel' || labelText.includes('phone')) { leadData.telefone = val; hasData = true; }
+                    else if (input.tagName.toLowerCase() === 'textarea' || labelText.includes('mensagem')) { leadData.mensagem = val; hasData = true; }
                 });
 
                 if (hasData) {
                     e.preventDefault(); e.stopPropagation();
+                    if (!leadData.email) { showToast("Por favor, insira um e-mail válido.", "error"); return; }
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     if (!emailRegex.test(leadData.email)) { showToast("Por favor, insira um e-mail válido.", "error"); return; }
                     const cleanPhone = leadData.telefone.replace(/\D/g, '');
-                    if (cleanPhone.length < 10 || cleanPhone.length > 11) { showToast("O telefone deve ter DDD + Número.", "error"); return; }
-                    if (!leadData.mensagem || leadData.mensagem.length < 10) { showToast("A mensagem deve ter pelo menos 10 caracteres.", "error"); return; }
+                    if (cleanPhone.length < 10 || cleanPhone.length > 11) { showToast("O telefone deve ter DDD + Número (apenas números).", "error"); return; }
+                    if (!leadData.mensagem || leadData.mensagem.length < 5) { showToast("A mensagem é muito curta.", "error"); return; }
 
                     const oldText = btn.textContent;
                     btn.textContent = 'Enviando...';
