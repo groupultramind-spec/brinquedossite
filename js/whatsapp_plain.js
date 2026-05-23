@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+(function() {
     // Sistema de Toast (Notificação Animada)
     const style = document.createElement('style');
     style.innerHTML = `
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).catch(e => console.error(e));
 
     // OUVINTE GLOBAL DE CLIQUES (Resolve o problema de renderização dinâmica da Wix)
-    document.body.addEventListener('click', (e) => {
+    document.body.addEventListener('click', (e) => { try {
         // 1. Verificar Clique em Endereço (Google Maps)
         if (botData && botData.location) {
             const targetText = (e.target.innerText || e.target.textContent || '').trim();
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (isSubmitBtn && e.target.closest) {
             const btn = e.target.closest('button') || e.target;
-            const formContainer = btn.closest('form') || (btn.parentElement ? btn.parentElement.parentElement : null);
+            const formContainer = btn.closest('form') || btn.closest('.wixui-form') || document;
             if (formContainer && formContainer.querySelector('input')) {
                 const inputs = formContainer.querySelectorAll('input, textarea');
                 let leadData = { nome: '', sobrenome: '', email: '', telefone: '', mensagem: '' };
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // 4. Categorias (Filtro Frontend Dinâmico)
-        const isCategoryLink = href.includes('/category/') || textContent.includes('todos os produtos');
+        const isCategoryLink = href.includes('/category/') || textContent.includes('todos os produtos') || textContent.includes('todos os itens');
         if (isCategoryLink) {
             e.preventDefault(); e.stopPropagation();
             const keywords = {
@@ -286,5 +286,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-    }, true); // useCapture = true para pegar antes do Wix bloquear
-});
+    } catch(err) { console.error('Global Click Error:', err); } }, true); // useCapture = true para pegar antes do Wix bloquear
+})();
