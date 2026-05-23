@@ -300,7 +300,7 @@
 
     } catch(err) { console.error('Global Click Error:', err); } }, true); // useCapture = true para pegar antes do Wix bloquear
 
-    // Anti-letras no telefone em tempo real
+    // Mascara de Telefone (bloqueia letras e formata com simbolos)
     document.body.addEventListener('input', (e) => {
         if (e.target.tagName === 'INPUT') {
             const attrText = (e.target.getAttribute('aria-label') || e.target.name || e.target.type || e.target.placeholder || e.target.id || '').toLowerCase();
@@ -311,12 +311,24 @@
                 parentText.includes('telefone') || parentText.includes('celular') ||
                 grandParentText.includes('telefone') || grandParentText.includes('celular')) {
                 
-                const clean = e.target.value.replace(/\D/g, '');
-                if (e.target.value !== clean) {
-                    e.target.value = clean;
-                    // Trigger React onChange se necessario
+                let v = e.target.value.replace(/\D/g, '');
+                if (v.length > 11) v = v.substring(0, 11);
+                
+                let formatted = v;
+                if (v.length > 2 && v.length <= 6) {
+                    formatted = `(${v.substring(0,2)}) ${v.substring(2)}`;
+                } else if (v.length > 6 && v.length <= 10) {
+                    formatted = `(${v.substring(0,2)}) ${v.substring(2,6)}-${v.substring(6)}`;
+                } else if (v.length > 10) {
+                    formatted = `(${v.substring(0,2)}) ${v.substring(2,7)}-${v.substring(7)}`;
+                } else if (v.length > 0) {
+                    formatted = v.length === 1 ? `(${v}` : `(${v}`;
+                }
+                
+                if (e.target.value !== formatted) {
+                    e.target.value = formatted;
                     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
-                    if (nativeInputValueSetter) { nativeInputValueSetter.call(e.target, clean); }
+                    if (nativeInputValueSetter) { nativeInputValueSetter.call(e.target, formatted); }
                     e.target.dispatchEvent(new Event('input', { bubbles: true }));
                 }
             }
