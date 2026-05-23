@@ -6,7 +6,7 @@ files.forEach(f => {
     let html = fs.readFileSync(f, 'utf8');
     
     // Remove the updateDOM inline script
-    html = html.replace(/<script>[\s\S]*?updateDOM[\s\S]*?<\/script>/g, '');
+    html = html.replace(/<script[^>]*>(?:(?!<\/script>)[\s\S])*?updateDOM(?:(?!<\/script>)[\s\S])*?<\/script>/g, '');
     
     // Check if there are any other <script> tags before API_BASE_URL that shouldn't be there
     // We already removed fetch('/api/...') and removeNumbers
