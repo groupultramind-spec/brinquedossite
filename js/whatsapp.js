@@ -1,1 +1,290 @@
-function a0_0xaa5c(_0x1d51d3,_0xf30b47){_0x1d51d3=_0x1d51d3-0x18c;const _0x4cf218=a0_0x4cf2();let _0xaa5c4b=_0x4cf218[_0x1d51d3];return _0xaa5c4b;}const a0_0x5e4f6c=a0_0xaa5c;function a0_0x4cf2(){const _0x17f6b7=['nodeValue','form','json','Nhocuné','1787040duekwh','logo','Dados\x20inválidos.','nodeName','body','img[alt*=\x22COMBO\x22],\x20img[alt*=\x22Combo\x22],\x20img[alt*=\x22Cama\x22],\x20img[alt*=\x22Piscina\x22]','bolinha','instagramUrl','querySelectorAll','mesa','wa.me','96439','a[href*=\x22/category/\x22]','infláveis','length','instagram.com','tobogã','SCRIPT','underline','normal','closest','todos','click','O\x20telefone\x20deve\x20ter\x20DDD\x20+\x20Número\x20(Ex:\x2011999999999).','enviar','now','some','115488yIuYvL','input,\x20textarea','pula','email','stopPropagation','trim','Erro:','preventDefault','test','telefone','h1,\x20h2,\x20h3,\x20h4,\x20p,\x20span','Facebook','fontWeight','site_session_id','\x0a\x0a📌\x20Origem:\x20','img[alt]','tel:+','produto','_blank','premium','querySelector','title','.png','abs','POST','none','style','catch','textContent','childNodes','toLowerCase','ALL','number','display','pebolim','disco','then','jogos\x20e\x20diversão','clientY','whatsapp.com','toString','Erro:\x20','facebook.com','setItem','basquete','tagName','forEach','111GIdGck','infl','placeholder','target','startsWith','2661760uzynMV','piscina','&text=','/category/','match','parentElement','inflável','vôlei','https://api.whatsapp.com/send?phone=','WhatsApp\x20(','3310CSSXpt','0.7','18DnOVGQ','A\x20mensagem\x20deve\x20ter\x20entre\x2010\x20e\x201000\x20caracteres.','5173vdIAtS','location','replace','fliperama','WhatsApp','block','mensagem','getAttribute','opacity','7861865GILBNT','h1,\x20h2,\x20h3,\x20h4','Instagram','application/json','stringify','Enviar','/api/track/exit','Por\x20favor,\x20insira\x20um\x20e-mail\x20válido.','substring','18fWahEL','open','product-page','.jpg','getItem','alt','karaokê','DOMContentLoaded','userAgent','jogo','Erro','backgroundColor','1345280FvcjHk','nodeType','Silva\x20Lisboa','from','divers','6232hiTuRA','value','API_BASE_URL','textDecoration','(11)','nome','elástica','href','error','sobrenome','button,\x20a','jacaré','random','text','success','includes','bottom','STYLE','\x0a\x0a📌\x20Tenho\x20interesse\x20no\x20item:\x20','fb.com','addEventListener'];a0_0x4cf2=function(){return _0x17f6b7;};return a0_0x4cf2();}(function(_0x4c1a2b,_0x4a7d5d){const _0x542f48=a0_0xaa5c,_0x2dce6e=_0x4c1a2b();while(!![]){try{const _0x4d5ffc=parseInt(_0x542f48(0x1d9))/0x1*(-parseInt(_0x542f48(0x1e8))/0x2)+parseInt(_0x542f48(0x1ea))/0x3*(parseInt(_0x542f48(0x1aa))/0x4)+parseInt(_0x542f48(0x20a))/0x5+-parseInt(_0x542f48(0x18f))/0x6+parseInt(_0x542f48(0x1ec))/0x7*(parseInt(_0x542f48(0x20f))/0x8)+parseInt(_0x542f48(0x1fe))/0x9*(parseInt(_0x542f48(0x1de))/0xa)+-parseInt(_0x542f48(0x1f5))/0xb;if(_0x4d5ffc===_0x4a7d5d)break;else _0x2dce6e['push'](_0x2dce6e['shift']());}catch(_0x536473){_0x2dce6e['push'](_0x2dce6e['shift']());}}}(a0_0x4cf2,0x5670d),document[a0_0x5e4f6c(0x223)](a0_0x5e4f6c(0x205),()=>{const _0xafa008=a0_0x5e4f6c,_0x8dbda3=()=>Date[_0xafa008(0x1a8)]()[_0xafa008(0x1d2)](0x24)+Math[_0xafa008(0x21b)]()['toString'](0x24)[_0xafa008(0x1fd)](0x2),_0x583e89=localStorage[_0xafa008(0x202)](_0xafa008(0x1b7))||_0x8dbda3();localStorage[_0xafa008(0x1d5)]('site_session_id',_0x583e89);const _0x2d319a=()=>{const _0x4993a0=_0xafa008;fetch(window[_0x4993a0(0x211)]+'/api/track/ping',{'method':_0x4993a0(0x1c2),'headers':{'Content-Type':'application/json'},'body':JSON['stringify']({'sessionId':_0x583e89,'userAgent':navigator[_0x4993a0(0x206)]})})[_0x4993a0(0x1c5)](()=>{});};_0x2d319a(),setInterval(_0x2d319a,0x1388),fetch(window[_0xafa008(0x211)]+'/api/whatsapp')[_0xafa008(0x1ce)](_0x3c3ed3=>_0x3c3ed3[_0xafa008(0x18d)]())[_0xafa008(0x1ce)](_0x2e90c7=>{const _0x1b0ae1=_0xafa008;if(_0x2e90c7[_0x1b0ae1(0x1ca)]){const _0x6762a5=_0x1cfcdf=>{const _0xdbb0e8=_0x1b0ae1;let _0x2b17fc=_0x1cfcdf[_0xdbb0e8(0x1ee)](/\D/g,'');if(_0x2b17fc[_0xdbb0e8(0x1dd)]('55')&&_0x2b17fc[_0xdbb0e8(0x19d)]>=0xc)_0x2b17fc=_0x2b17fc[_0xdbb0e8(0x1fd)](0x2);if(_0x2b17fc[_0xdbb0e8(0x19d)]>=0xa){const _0x30c744=_0x2b17fc['substring'](0x0,0x2),_0x587c4a=_0x2b17fc[_0xdbb0e8(0x19d)]===0xb?_0x2b17fc[_0xdbb0e8(0x1fd)](0x2,0x7):_0x2b17fc[_0xdbb0e8(0x1fd)](0x2,0x6),_0x50ff6c=_0x2b17fc[_0xdbb0e8(0x1fd)](_0x2b17fc[_0xdbb0e8(0x19d)]-0x4);return'('+_0x30c744+')\x20'+_0x587c4a+'-'+_0x50ff6c;}return _0x1cfcdf;},_0x15ace1=_0x6762a5(_0x2e90c7['number']),_0x112b42=_0x1cc750=>{const _0x35640b=_0x1b0ae1;if(_0x1cc750['nodeType']===0x3){const _0xa0395=_0x1cc750['nodeValue'];(_0xa0395[_0x35640b(0x21e)](_0x35640b(0x19a))||_0xa0395[_0x35640b(0x21e)](_0x35640b(0x213)))&&(_0x1cc750[_0x35640b(0x224)]=_0xa0395['replace'](/\(11\)\s*96439-?9707/g,_0x15ace1)[_0x35640b(0x1ee)](/\(11\)\s*964399707/g,_0x15ace1)[_0x35640b(0x1ee)](/11964399707/g,_0x15ace1)[_0x35640b(0x1ee)](/96439-?9707/g,_0x15ace1)),_0x2e90c7['location']&&(_0xa0395[_0x35640b(0x21e)](_0x35640b(0x20c))||_0xa0395[_0x35640b(0x21e)](_0x35640b(0x18e)))&&(_0x1cc750[_0x35640b(0x224)]=_0x2e90c7[_0x35640b(0x1ed)]);}else _0x1cc750[_0x35640b(0x20b)]===0x1&&_0x1cc750[_0x35640b(0x192)]!==_0x35640b(0x1a0)&&_0x1cc750['nodeName']!==_0x35640b(0x220)&&_0x1cc750[_0x35640b(0x1c7)][_0x35640b(0x1d8)](_0x112b42);};_0x112b42(document[_0x1b0ae1(0x193)]);}const _0x2530db=document[_0x1b0ae1(0x197)]('a');_0x2530db[_0x1b0ae1(0x1d8)](_0x1875a7=>{const _0x31f3fa=_0x1b0ae1,_0x16494d=_0x1875a7[_0x31f3fa(0x216)][_0x31f3fa(0x1c8)](),_0x3e5282=_0x16494d[_0x31f3fa(0x21e)](_0x31f3fa(0x1d1))||_0x16494d[_0x31f3fa(0x21e)](_0x31f3fa(0x199))||_0x16494d['includes']('wa.link'),_0x32ae08=_0x16494d['includes']('tel:'),_0x201450=_0x16494d[_0x31f3fa(0x21e)](_0x31f3fa(0x19e)),_0xbcafc=_0x16494d[_0x31f3fa(0x21e)](_0x31f3fa(0x1d4))||_0x16494d['includes'](_0x31f3fa(0x222)),_0x430f77=_0x16494d[_0x31f3fa(0x21e)](_0x31f3fa(0x1e1));if(_0x201450){if(_0x2e90c7[_0x31f3fa(0x196)])_0x1875a7['href']=_0x2e90c7[_0x31f3fa(0x196)];_0x1875a7[_0x31f3fa(0x223)](_0x31f3fa(0x1a5),()=>{const _0x284b96=_0x31f3fa;fetch(window[_0x284b96(0x211)]+_0x284b96(0x1fb),{'method':_0x284b96(0x1c2),'headers':{'Content-Type':_0x284b96(0x1f8)},'body':JSON[_0x284b96(0x1f9)]({'sessionId':_0x583e89,'target':_0x284b96(0x1f7)})})['catch'](()=>{});});}if(_0xbcafc){if(_0x2e90c7['facebookUrl'])_0x1875a7[_0x31f3fa(0x216)]=_0x2e90c7['facebookUrl'];_0x1875a7['addEventListener'](_0x31f3fa(0x1a5),()=>{const _0x3a7201=_0x31f3fa;fetch(window[_0x3a7201(0x211)]+'/api/track/exit',{'method':_0x3a7201(0x1c2),'headers':{'Content-Type':'application/json'},'body':JSON[_0x3a7201(0x1f9)]({'sessionId':_0x583e89,'target':_0x3a7201(0x1b5)})})[_0x3a7201(0x1c5)](()=>{});});}if(_0x2e90c7[_0x31f3fa(0x1ca)]&&_0x2e90c7['text']){let _0x2ef1ef=_0x2e90c7[_0x31f3fa(0x1ca)]['replace'](/\D/g,'');!_0x2ef1ef[_0x31f3fa(0x1dd)]('55')&&_0x2ef1ef[_0x31f3fa(0x19d)]>=0xa&&(_0x2ef1ef='55'+_0x2ef1ef);const _0x19bad9=formatPhoneNumber(_0x2ef1ef);if(_0x32ae08&&_0x1875a7[_0x31f3fa(0x1c6)][_0x31f3fa(0x1e2)](/\d{4}/)){_0x1875a7[_0x31f3fa(0x216)]=_0x31f3fa(0x1ba)+_0x2ef1ef;function _0x5f3c38(_0x565b7f,_0x5a783a){const _0x11d45a=_0x31f3fa;if(_0x565b7f[_0x11d45a(0x20b)]===0x3&&_0x565b7f[_0x11d45a(0x224)][_0x11d45a(0x1e2)](/\d{4}/))return _0x565b7f[_0x11d45a(0x224)]=_0x5a783a,!![];else{if(_0x565b7f[_0x11d45a(0x20b)]===0x1)for(let _0x3ceca8 of _0x565b7f['childNodes']){if(_0x5f3c38(_0x3ceca8,_0x5a783a))return!![];}}return![];}_0x5f3c38(_0x1875a7,_0x19bad9);}(_0x3e5282||_0x32ae08&&_0x1875a7['textContent'][_0x31f3fa(0x1e2)](/\d{4}/))&&(_0x1875a7['addEventListener'](_0x31f3fa(0x1a5),_0x3f4f91=>{const _0x485778=_0x31f3fa;fetch(window[_0x485778(0x211)]+_0x485778(0x1fb),{'method':_0x485778(0x1c2),'headers':{'Content-Type':_0x485778(0x1f8)},'body':JSON[_0x485778(0x1f9)]({'sessionId':_0x583e89,'target':_0x485778(0x1f0)})})[_0x485778(0x1c5)](()=>{});if(_0x3e5282){_0x3f4f91[_0x485778(0x1b1)]();let _0x2e0131=document[_0x485778(0x1bf)],_0x325ecc=null,_0x576897=_0x1875a7[_0x485778(0x1e3)];while(_0x576897&&_0x576897!==document['body']&&!_0x325ecc){const _0x2d1f90=_0x576897['querySelector'](_0x485778(0x194));if(_0x2d1f90&&_0x2d1f90[_0x485778(0x203)]){_0x325ecc=_0x2d1f90['alt'][_0x485778(0x1ee)]('.png','')[_0x485778(0x1ee)]('.jpg','');break;}const _0x2874f1=_0x576897[_0x485778(0x1be)](_0x485778(0x1f6));if(_0x2874f1&&_0x2874f1[_0x485778(0x1c6)][_0x485778(0x1af)]()[_0x485778(0x19d)]>0x3){_0x325ecc=_0x2874f1[_0x485778(0x1c6)][_0x485778(0x1af)]();break;}_0x576897=_0x576897['parentElement'];}if(!_0x325ecc){const _0x7568c4=_0x3f4f91[_0x485778(0x1d0)],_0x1b79ca=_0x3f4f91['clientX'],_0x311d04=Array['from'](document['querySelectorAll'](_0x485778(0x1b9)));let _0x4ff62b=Infinity;for(const _0x922c41 of _0x311d04){if(_0x922c41[_0x485778(0x203)][_0x485778(0x19d)]<0x3||_0x922c41['alt'][_0x485778(0x21e)]('bg')||_0x922c41['alt'][_0x485778(0x21e)](_0x485778(0x190)))continue;const _0xefbc71=_0x922c41['getBoundingClientRect'](),_0x272c19=Math[_0x485778(0x1c1)](_0xefbc71[_0x485778(0x21f)]-_0x7568c4)+Math[_0x485778(0x1c1)](_0xefbc71['left']-_0x1b79ca);_0x272c19<_0x4ff62b&&_0x272c19<0x320&&(_0x4ff62b=_0x272c19,_0x325ecc=_0x922c41[_0x485778(0x203)]['replace'](_0x485778(0x1c0),'')[_0x485778(0x1ee)](_0x485778(0x201),''));}}let _0x215fa0=_0x2e90c7[_0x485778(0x21c)];_0x325ecc?_0x215fa0+=_0x485778(0x221)+_0x325ecc:_0x215fa0+=_0x485778(0x1b8)+_0x2e0131;const _0x52b854=_0x485778(0x1e6)+_0x2e90c7[_0x485778(0x1ca)]+'&text='+encodeURIComponent(_0x215fa0);window[_0x485778(0x1ff)](_0x52b854,_0x485778(0x1bc));}}),_0x3e5282&&(_0x1875a7[_0x31f3fa(0x216)]='#')),_0x430f77&&_0x1875a7[_0x31f3fa(0x223)](_0x31f3fa(0x1a5),_0x670669=>{const _0xee2c2b=_0x31f3fa;_0x670669[_0xee2c2b(0x1b1)](),_0x670669[_0xee2c2b(0x1ae)]();let _0x216981=_0x1875a7[_0xee2c2b(0x1c6)][_0xee2c2b(0x1af)]()[_0xee2c2b(0x1c8)]();const _0x34901d={'camas\x20elásticas':['cama',_0xee2c2b(0x215)],'infláveis':[_0xee2c2b(0x19f),'castelinho',_0xee2c2b(0x1ac),_0xee2c2b(0x1e4),_0xee2c2b(0x21a),_0xee2c2b(0x1bd)],'jogos\x20e\x20diversão':['ping',_0xee2c2b(0x1e5),_0xee2c2b(0x204),_0xee2c2b(0x1cd),_0xee2c2b(0x1cc),_0xee2c2b(0x1d6),_0xee2c2b(0x1ef),_0xee2c2b(0x198),_0xee2c2b(0x207),'diversão'],'piscina\x20de\x20bolinhas':['piscina',_0xee2c2b(0x195)]};let _0x44a9cb=[];if(_0x216981[_0xee2c2b(0x21e)]('all')||_0x216981[_0xee2c2b(0x21e)](_0xee2c2b(0x1a4)))_0x44a9cb=[_0xee2c2b(0x1c9)];else{if(_0x216981['includes']('cama'))_0x44a9cb=_0x34901d['camas\x20elásticas'];else{if(_0x216981[_0xee2c2b(0x21e)](_0xee2c2b(0x1da)))_0x44a9cb=_0x34901d[_0xee2c2b(0x19c)];else{if(_0x216981[_0xee2c2b(0x21e)](_0xee2c2b(0x207))||_0x216981[_0xee2c2b(0x21e)](_0xee2c2b(0x20e)))_0x44a9cb=_0x34901d[_0xee2c2b(0x1cf)];else _0x216981['includes'](_0xee2c2b(0x1df))?_0x44a9cb=_0x34901d['piscina\x20de\x20bolinhas']:_0x44a9cb=[_0xee2c2b(0x1c9)];}}}const _0x456682=document[_0xee2c2b(0x197)]('[data-hook=\x22product-list-grid-item\x22]');_0x456682['length']>0x0?(_0x456682[_0xee2c2b(0x1d8)](_0x1c6df2=>{const _0x330258=_0xee2c2b;if(_0x44a9cb[_0x330258(0x21e)](_0x330258(0x1c9))){_0x1c6df2[_0x330258(0x1c4)][_0x330258(0x1cb)]='block';return;}const _0x4a81b0=_0x1c6df2[_0x330258(0x1c6)][_0x330258(0x1c8)](),_0x51f09c=_0x44a9cb[_0x330258(0x1a9)](_0x4eb6e9=>_0x4a81b0[_0x330258(0x21e)](_0x4eb6e9));_0x51f09c?_0x1c6df2[_0x330258(0x1c4)][_0x330258(0x1cb)]=_0x330258(0x1f1):_0x1c6df2[_0x330258(0x1c4)]['display']=_0x330258(0x1c3);}),document[_0xee2c2b(0x197)](_0xee2c2b(0x19b))[_0xee2c2b(0x1d8)](_0x153236=>{const _0xbbb77=_0xee2c2b;_0x153236[_0xbbb77(0x1c4)][_0xbbb77(0x1b6)]=_0xbbb77(0x1a2),_0x153236[_0xbbb77(0x1c4)][_0xbbb77(0x212)]=_0xbbb77(0x1c3);}),_0x1875a7[_0xee2c2b(0x1c4)][_0xee2c2b(0x1b6)]='bold',_0x1875a7[_0xee2c2b(0x1c4)][_0xee2c2b(0x212)]=_0xee2c2b(0x1a1)):window['location'][_0xee2c2b(0x216)]='/'+_0x1875a7[_0xee2c2b(0x1f3)](_0xee2c2b(0x216));});}}),document[_0x1b0ae1(0x193)]['addEventListener'](_0x1b0ae1(0x1a5),_0xaab559=>{const _0x15a18d=_0x1b0ae1,_0x13488e=_0xaab559[_0x15a18d(0x1dc)][_0x15a18d(0x1a3)]('a');if(!_0x13488e)return;const _0x11891f=_0x13488e[_0x15a18d(0x216)][_0x15a18d(0x1c8)](),_0x61e1d1=_0x11891f[_0x15a18d(0x21e)](_0x15a18d(0x200));if(_0x61e1d1&&_0x2e90c7[_0x15a18d(0x1ca)]&&_0x2e90c7[_0x15a18d(0x21c)]){_0xaab559['preventDefault'](),_0xaab559[_0x15a18d(0x1ae)]();let _0x3d6057=null;const _0x25a70a=_0x13488e[_0x15a18d(0x197)](_0x15a18d(0x1b4));for(const _0x244e83 of _0x25a70a){const _0xec09bb=_0x244e83[_0x15a18d(0x1c6)][_0x15a18d(0x1af)]();if(_0xec09bb[_0x15a18d(0x19d)]>0x3&&!_0xec09bb[_0x15a18d(0x21e)]('R$')&&!_0xec09bb[_0x15a18d(0x1c8)]()['includes'](_0x15a18d(0x1bb))){_0x3d6057=_0xec09bb;break;}}if(!_0x3d6057){const _0x27be8c=_0x13488e['querySelector'](_0x15a18d(0x1b9));_0x27be8c&&_0x27be8c[_0x15a18d(0x203)][_0x15a18d(0x19d)]>0x3&&!_0x27be8c[_0x15a18d(0x203)]['includes']('bg')&&(_0x3d6057=_0x27be8c[_0x15a18d(0x203)]['replace']('.png','')[_0x15a18d(0x1ee)](_0x15a18d(0x201),''));}if(!_0x3d6057){let _0x264777=_0x13488e[_0x15a18d(0x1e3)];for(let _0xeaf78c=0x0;_0xeaf78c<0x4;_0xeaf78c++){if(!_0x264777)break;const _0x56e9dd=_0x264777[_0x15a18d(0x197)](_0x15a18d(0x1b4));for(const _0x1a800d of _0x56e9dd){const _0x2e9930=_0x1a800d[_0x15a18d(0x1c6)][_0x15a18d(0x1af)]();if(_0x2e9930[_0x15a18d(0x19d)]>0x3&&!_0x2e9930['includes']('R$')&&!_0x2e9930[_0x15a18d(0x1c8)]()['includes']('produto')){_0x3d6057=_0x2e9930;break;}}if(_0x3d6057)break;_0x264777=_0x264777[_0x15a18d(0x1e3)];}}if(!_0x3d6057)_0x3d6057='um\x20Produto\x20do\x20Catálogo';let _0x34f32a=_0x2e90c7[_0x15a18d(0x21c)]+(_0x15a18d(0x221)+_0x3d6057);const _0x5e797d='https://api.whatsapp.com/send?phone='+_0x2e90c7[_0x15a18d(0x1ca)]+_0x15a18d(0x1e0)+encodeURIComponent(_0x34f32a);fetch(window[_0x15a18d(0x211)]+_0x15a18d(0x1fb),{'method':_0x15a18d(0x1c2),'headers':{'Content-Type':'application/json'},'body':JSON[_0x15a18d(0x1f9)]({'sessionId':_0x583e89,'target':_0x15a18d(0x1e7)+_0x3d6057+')'})})[_0x15a18d(0x1c5)](()=>{}),window['open'](_0x5e797d,'_blank');}},!![]);const _0x1c75bd=Array[_0x1b0ae1(0x20d)](document[_0x1b0ae1(0x197)](_0x1b0ae1(0x219)))['filter'](_0x377d54=>_0x377d54['textContent']&&_0x377d54[_0x1b0ae1(0x1c6)][_0x1b0ae1(0x1af)]()[_0x1b0ae1(0x1c8)]()===_0x1b0ae1(0x1a7));_0x1c75bd[_0x1b0ae1(0x1d8)](_0x508e33=>{const _0x510d57=_0x1b0ae1;_0x508e33[_0x510d57(0x223)](_0x510d57(0x1a5),_0x46f30f=>{const _0x27e897=_0x510d57,_0xf8f071=_0x508e33[_0x27e897(0x1a3)](_0x27e897(0x18c))||_0x508e33[_0x27e897(0x1e3)][_0x27e897(0x1e3)];if(!_0xf8f071)return;const _0x1f9db8=_0xf8f071[_0x27e897(0x197)](_0x27e897(0x1ab));let _0x32e3cf={'nome':'','sobrenome':'','email':'','telefone':'','mensagem':''},_0x47480f=![];_0x1f9db8[_0x27e897(0x1d8)](_0x437331=>{const _0x58368e=_0x27e897,_0x584e49=(_0x437331[_0x58368e(0x1db)]||'')['toLowerCase'](),_0xc1c614=_0x437331['value'][_0x58368e(0x1af)]();if(!_0xc1c614)return;if(_0x584e49[_0x58368e(0x21e)](_0x58368e(0x214))&&!_0x584e49['includes'](_0x58368e(0x218)))_0x32e3cf['nome']=_0xc1c614,_0x47480f=!![];else{if(_0x584e49[_0x58368e(0x21e)](_0x58368e(0x218)))_0x32e3cf['sobrenome']=_0xc1c614,_0x47480f=!![];else{if(_0x584e49[_0x58368e(0x21e)](_0x58368e(0x1ad)))_0x32e3cf[_0x58368e(0x1ad)]=_0xc1c614,_0x47480f=!![];else{if(_0x584e49[_0x58368e(0x21e)](_0x58368e(0x1b3))||_0x584e49[_0x58368e(0x21e)]('celular'))_0x32e3cf[_0x58368e(0x1b3)]=_0xc1c614,_0x47480f=!![];else(_0x437331[_0x58368e(0x1d7)]['toLowerCase']()==='textarea'||_0x584e49[_0x58368e(0x21e)](_0x58368e(0x1f2)))&&(_0x32e3cf[_0x58368e(0x1f2)]=_0xc1c614,_0x47480f=!![]);}}}});if(_0x47480f){_0x46f30f[_0x27e897(0x1b1)](),_0x46f30f[_0x27e897(0x1ae)]();const _0x29d10b=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;if(!_0x29d10b[_0x27e897(0x1b2)](_0x32e3cf[_0x27e897(0x1ad)])){alert(_0x27e897(0x1fc));return;}const _0x1b1c66=_0x32e3cf['telefone']['replace'](/\D/g,'');if(_0x1b1c66[_0x27e897(0x19d)]<0xa||_0x1b1c66[_0x27e897(0x19d)]>0xb){alert(_0x27e897(0x1a6));return;}if(!_0x32e3cf['mensagem']||_0x32e3cf[_0x27e897(0x1f2)][_0x27e897(0x19d)]<0xa||_0x32e3cf[_0x27e897(0x1f2)][_0x27e897(0x19d)]>0x3e8){alert(_0x27e897(0x1eb));return;}_0x508e33[_0x27e897(0x1c6)]='Enviando...',_0x508e33[_0x27e897(0x1c4)][_0x27e897(0x1f4)]=_0x27e897(0x1e9),fetch(window[_0x27e897(0x211)]+'/api/contact',{'method':_0x27e897(0x1c2),'headers':{'Content-Type':_0x27e897(0x1f8)},'body':JSON['stringify'](_0x32e3cf)})[_0x27e897(0x1ce)](_0x4c433e=>_0x4c433e[_0x27e897(0x18d)]())[_0x27e897(0x1ce)](_0xd43345=>{const _0x50da8f=_0x27e897;if(!_0xd43345[_0x50da8f(0x21d)]){alert(_0x50da8f(0x1d3)+(_0xd43345['error']||_0x50da8f(0x191))),_0x508e33['textContent']=_0x50da8f(0x1fa),_0x508e33[_0x50da8f(0x1c4)][_0x50da8f(0x1f4)]='1';return;}_0x508e33[_0x50da8f(0x1c6)]='Enviado\x20com\x20Sucesso!',_0x508e33[_0x50da8f(0x1c4)][_0x50da8f(0x209)]='#4CAF50',_0x1f9db8[_0x50da8f(0x1d8)](_0x3d1daf=>_0x3d1daf[_0x50da8f(0x210)]=''),setTimeout(()=>{const _0x195575=_0x50da8f;_0x508e33['textContent']=_0x195575(0x1fa),_0x508e33['style']['opacity']='1',_0x508e33[_0x195575(0x1c4)][_0x195575(0x209)]='';},0xbb8);})[_0x27e897(0x1c5)](_0x34d057=>{const _0x3cef17=_0x27e897;console['error'](_0x3cef17(0x208),_0x34d057),_0x508e33[_0x3cef17(0x1c6)]=_0x3cef17(0x208),setTimeout(()=>{const _0x19cbc2=_0x3cef17;_0x508e33[_0x19cbc2(0x1c6)]=_0x19cbc2(0x1fa),_0x508e33[_0x19cbc2(0x1c4)][_0x19cbc2(0x1f4)]='1';},0xbb8);});}});});})[_0xafa008(0x1c5)](_0x4b7313=>console[_0xafa008(0x217)](_0xafa008(0x1b0),_0x4b7313));}));
+document.addEventListener('DOMContentLoaded', () => {
+    // Sistema de Toast (Notificação Animada)
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .custom-toast {
+            position: fixed;
+            bottom: 20px;
+            right: -300px;
+            background-color: #333;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-family: 'Inter', sans-serif, Arial;
+            font-size: 15px;
+            font-weight: 500;
+            z-index: 999999;
+            transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .custom-toast.show { right: 20px; }
+        .custom-toast.success { background-color: #2e7d32; }
+        .custom-toast.error { background-color: #d32f2f; }
+    `;
+    document.head.appendChild(style);
+
+    const showToast = (msg, type = 'success') => {
+        const toast = document.createElement('div');
+        toast.className = 'custom-toast ' + type;
+        toast.innerHTML = (type === 'success' ? '✅ ' : '❌ ') + msg;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 100);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 400);
+        }, 4000);
+    };
+
+    // Gerar e manter Sessão
+    const generateSessionId = () => Date.now().toString(36) + Math.random().toString(36).substring(2);
+    const sessionId = localStorage.getItem('site_session_id') || generateSessionId();
+    localStorage.setItem('site_session_id', sessionId);
+    
+    // Heartbeat
+    const sendHeartbeat = () => {
+        if (!window.API_BASE_URL) return;
+        fetch(window.API_BASE_URL + '/api/track/ping', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sessionId, userAgent: navigator.userAgent })
+        }).catch(()=>{});
+    };
+    sendHeartbeat(); setInterval(sendHeartbeat, 5000);
+
+    let botData = null;
+
+    // Função de formatação
+    const formatPhoneNumber = (num) => {
+        let str = num.replace(/\D/g, '');
+        if (str.startsWith('55') && str.length >= 12) str = str.substring(2);
+        if(str.length >= 10) {
+            return `(${str.substring(0,2)}) ${str.length === 11 ? str.substring(2,7) : str.substring(2,6)}-${str.substring(str.length - 4)}`;
+        }
+        return num;
+    };
+
+    // Atualiza textos estáticos de contato e endereço
+    const updateStaticText = () => {
+        if (!botData) return;
+        const formattedNum = formatPhoneNumber(botData.number);
+        const walkDom = (node) => {
+            if(node.nodeType === 3) {
+                const val = node.nodeValue;
+                if(val.includes('96439') || val.includes('(11)')) {
+                    node.nodeValue = val.replace(/\(11\)\s*96439-?9707/g, formattedNum).replace(/11964399707/g, formattedNum).replace(/96439-?9707/g, formattedNum);
+                }
+                if (botData.location && (val.includes('Silva Lisboa') || val.includes('Nhocuné'))) {
+                    node.nodeValue = botData.location;
+                }
+            } else if (node.nodeType === 1 && node.nodeName !== 'SCRIPT' && node.nodeName !== 'STYLE') {
+                node.childNodes.forEach(walkDom);
+                // Faz o endereço parecer clicável
+                if (node.textContent && botData.location && node.textContent.includes(botData.location) && node.tagName !== 'A' && node.textContent.length < 100) {
+                    node.style.cursor = 'pointer';
+                    node.title = 'Abrir no Google Maps';
+                }
+            }
+        };
+        walkDom(document.body);
+    };
+
+    // Busca Dados do Servidor
+    fetch((window.API_BASE_URL || 'https://brinquedosemcasa.shardweb.app') + '/api/whatsapp')
+        .then(res => res.json())
+        .then(data => {
+            botData = data;
+            updateStaticText();
+            // Correção para Wix: Pode ser que os elementos mudem após hidratar
+            setTimeout(updateStaticText, 3000);
+        }).catch(e => console.error(e));
+
+    // OUVINTE GLOBAL DE CLIQUES (Resolve o problema de renderização dinâmica da Wix)
+    document.body.addEventListener('click', (e) => {
+        // 1. Verificar Clique em Endereço (Google Maps)
+        if (botData && botData.location) {
+            const targetText = (e.target.innerText || e.target.textContent || '').trim();
+            if (targetText.includes(botData.location) && targetText.length < 100) {
+                e.preventDefault(); e.stopPropagation();
+                window.open('https://maps.google.com/?q=' + encodeURIComponent(botData.location), '_blank');
+                return;
+            }
+        }
+
+        // 2. Envio de Formulário de Contato
+        const targetLower = (e.target.innerText || e.target.textContent || '').trim().toLowerCase();
+        const isSubmitBtn = targetLower === 'enviar' || e.target.value === 'Enviar' || (e.target.closest && e.target.closest('button') && e.target.closest('button').textContent.trim().toLowerCase() === 'enviar');
+        
+        if (isSubmitBtn && e.target.closest) {
+            const btn = e.target.closest('button') || e.target;
+            const formContainer = btn.closest('form') || (btn.parentElement ? btn.parentElement.parentElement : null);
+            if (formContainer && formContainer.querySelector('input')) {
+                const inputs = formContainer.querySelectorAll('input, textarea');
+                let leadData = { nome: '', sobrenome: '', email: '', telefone: '', mensagem: '' };
+                let hasData = false;
+
+                inputs.forEach(input => {
+                    const placeholder = (input.placeholder || '').toLowerCase();
+                    const val = input.value.trim();
+                    if (!val) return;
+                    if (placeholder.includes('nome') && !placeholder.includes('sobrenome')) { leadData.nome = val; hasData = true; }
+                    else if (placeholder.includes('sobrenome')) { leadData.sobrenome = val; hasData = true; }
+                    else if (placeholder.includes('email')) { leadData.email = val; hasData = true; }
+                    else if (placeholder.includes('telefone') || placeholder.includes('celular')) { leadData.telefone = val; hasData = true; }
+                    else if (input.tagName.toLowerCase() === 'textarea' || placeholder.includes('mensagem')) { leadData.mensagem = val; hasData = true; }
+                });
+
+                if (hasData) {
+                    e.preventDefault(); e.stopPropagation();
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(leadData.email)) { showToast("Por favor, insira um e-mail válido.", "error"); return; }
+                    const cleanPhone = leadData.telefone.replace(/\D/g, '');
+                    if (cleanPhone.length < 10 || cleanPhone.length > 11) { showToast("O telefone deve ter DDD + Número.", "error"); return; }
+                    if (!leadData.mensagem || leadData.mensagem.length < 10) { showToast("A mensagem deve ter pelo menos 10 caracteres.", "error"); return; }
+
+                    const oldText = btn.textContent;
+                    btn.textContent = 'Enviando...';
+                    btn.style.opacity = '0.7';
+
+                    fetch((window.API_BASE_URL || 'https://brinquedosemcasa.shardweb.app') + '/api/contact', {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(leadData)
+                    }).then(res => res.json()).then(resData => {
+                        if (!resData.success) {
+                            showToast(resData.error || "Dados inválidos.", "error");
+                            btn.textContent = oldText; btn.style.opacity = '1'; return;
+                        }
+                        showToast("Mensagem enviada com sucesso!");
+                        inputs.forEach(i => i.value = '');
+                        setTimeout(() => { btn.textContent = oldText; btn.style.opacity = '1'; }, 3000);
+                    }).catch(err => {
+                        showToast("Erro ao enviar mensagem.", "error");
+                        btn.textContent = oldText; btn.style.opacity = '1';
+                    });
+                    return; // Finaliza processamento deste clique
+                }
+            }
+        }
+
+        // Buscar Link Ancestral (se o clique for em um icone/texto dentro de tag A)
+        if (!e.target.closest) return;
+        const link = e.target.closest('a');
+        if (!link) return;
+
+        const href = (link.getAttribute('href') || '').toLowerCase();
+        const textContent = link.textContent.trim().toLowerCase();
+
+        // 3. Redes Sociais
+        if (href.includes('instagram.com') && botData && botData.instagramUrl) {
+            e.preventDefault(); e.stopPropagation();
+            fetch((window.API_BASE_URL || 'https://brinquedosemcasa.shardweb.app') + '/api/track/exit', { method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ sessionId, target: 'Instagram' }) }).catch(()=>{});
+            window.open(botData.instagramUrl, '_blank');
+            return;
+        }
+        if ((href.includes('facebook.com') || href.includes('fb.com')) && botData && botData.facebookUrl) {
+            e.preventDefault(); e.stopPropagation();
+            fetch((window.API_BASE_URL || 'https://brinquedosemcasa.shardweb.app') + '/api/track/exit', { method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ sessionId, target: 'Facebook' }) }).catch(()=>{});
+            window.open(botData.facebookUrl, '_blank');
+            return;
+        }
+
+        // 4. Categorias (Filtro Frontend Dinâmico)
+        const isCategoryLink = href.includes('/category/') || textContent.includes('todos os produtos');
+        if (isCategoryLink) {
+            e.preventDefault(); e.stopPropagation();
+            const keywords = {
+                'camas elásticas': ['cama', 'elástica'],
+                'infláveis': ['tobogã', 'castelinho', 'pula', 'inflável', 'jacaré', 'premium'],
+                'jogos e diversão': ['ping', 'vôlei', 'karaokê', 'disco', 'pebolim', 'basquete', 'fliperama', 'mesa', 'jogo', 'diversão', 'games'],
+                'piscina de bolinhas': ['piscina', 'bolinha']
+            };
+            let selectedKeywords = ['ALL'];
+            if (textContent.includes('cama')) selectedKeywords = keywords['camas elásticas'];
+            else if (textContent.includes('infl')) selectedKeywords = keywords['infláveis'];
+            else if (textContent.includes('jogo') || textContent.includes('divers')) selectedKeywords = keywords['jogos e diversão'];
+            else if (textContent.includes('piscina')) selectedKeywords = keywords['piscina de bolinhas'];
+
+            const products = document.querySelectorAll('[data-hook="product-list-grid-item"]');
+            if (products.length > 0) {
+                products.forEach(prod => {
+                    if (selectedKeywords[0] === 'ALL') { prod.style.display = 'block'; return; }
+                    const pText = prod.textContent.toLowerCase();
+                    const match = selectedKeywords.some(kw => pText.includes(kw));
+                    prod.style.display = match ? 'block' : 'none';
+                });
+                // Update bold state
+                document.querySelectorAll('a').forEach(a => {
+                    if((a.getAttribute('href')||'').includes('/category/') || a.textContent.toLowerCase().includes('todos os produtos')) {
+                        a.style.fontWeight = 'normal'; a.style.textDecoration = 'none';
+                    }
+                });
+                link.style.fontWeight = 'bold'; link.style.textDecoration = 'underline';
+            } else if (window.location.pathname.length > 2 && window.location.pathname !== '/catalogo') {
+                window.location.href = '/' + (href.startsWith('/') ? href.substring(1) : href);
+            }
+            return;
+        }
+
+        // 5. WhatsApp (Produtos, Combos e Direto)
+        const isProductLink = href.includes('product-page') || href.includes('#product-page') || textContent.includes('reservar agora');
+        const isWhatsAppDirect = href.includes('whatsapp.com') || href.includes('wa.me') || href.includes('wa.link');
+        const isTelLink = href.includes('tel:');
+        
+        if ((isProductLink || isWhatsAppDirect || isTelLink) && botData && botData.number && botData.text) {
+            e.preventDefault(); e.stopPropagation();
+
+            let foundItem = null;
+            
+            // Tenta encontrar o nome do produto/combo subindo a árvore
+            let parent = e.target;
+            while (parent && parent !== document.body && !foundItem) {
+                // Procura um Combo pelo texto
+                const texts = parent.querySelectorAll('h1, h2, h3, h4, span, p');
+                for (const t of texts) {
+                    const val = t.textContent.trim();
+                    if (val.toUpperCase().includes('COMBO') && val.length < 15) {
+                        foundItem = val.toUpperCase();
+                        break;
+                    }
+                    if (isProductLink && val.length > 3 && !val.includes('R$') && !val.toLowerCase().includes('produto') && !val.toLowerCase().includes('reservar')) {
+                        foundItem = val;
+                        break; // Pega o primeiro título grande válido
+                    }
+                }
+                
+                // Procura na imagem do contexto
+                if (!foundItem) {
+                    const img = parent.querySelector('img[alt]');
+                    if (img && img.alt && img.alt.length > 3 && !img.alt.includes('bg') && !img.alt.includes('logo')) {
+                        foundItem = img.alt.replace('.png', '').replace('.jpg', '');
+                    }
+                }
+                
+                parent = parent.parentElement;
+            }
+
+            if (!foundItem) foundItem = document.title || "Catálogo";
+
+            let dynamicText = botData.text;
+            if(isProductLink || textContent.includes('reservar')) {
+                dynamicText += `\n\n📌 Tenho interesse no item: ${foundItem}`;
+            } else if (!isTelLink) {
+                dynamicText += `\n\n📌 Origem: ${foundItem}`;
+            }
+
+            const cleanPhone = botData.number.replace(/\D/g, '');
+            const phoneNum = cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone;
+            
+            fetch((window.API_BASE_URL || 'https://brinquedosemcasa.shardweb.app') + '/api/track/exit', { method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ sessionId, target: `WhatsApp (${foundItem})` }) }).catch(()=>{});
+            
+            if (isTelLink && !isWhatsAppDirect && !isProductLink) {
+                window.location.href = `tel:+${phoneNum}`;
+            } else {
+                const waLink = `https://api.whatsapp.com/send?phone=${phoneNum}&text=${encodeURIComponent(dynamicText)}`;
+                window.open(waLink, '_blank');
+            }
+        }
+
+    }, true); // useCapture = true para pegar antes do Wix bloquear
+});

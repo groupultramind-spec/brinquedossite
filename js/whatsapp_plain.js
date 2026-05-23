@@ -1,377 +1,290 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // Gerar ID Único de Sessão
+    // Sistema de Toast (Notificação Animada)
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .custom-toast {
+            position: fixed;
+            bottom: 20px;
+            right: -300px;
+            background-color: #333;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-family: 'Inter', sans-serif, Arial;
+            font-size: 15px;
+            font-weight: 500;
+            z-index: 999999;
+            transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .custom-toast.show { right: 20px; }
+        .custom-toast.success { background-color: #2e7d32; }
+        .custom-toast.error { background-color: #d32f2f; }
+    `;
+    document.head.appendChild(style);
+
+    const showToast = (msg, type = 'success') => {
+        const toast = document.createElement('div');
+        toast.className = 'custom-toast ' + type;
+        toast.innerHTML = (type === 'success' ? '✅ ' : '❌ ') + msg;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 100);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 400);
+        }, 4000);
+    };
+
+    // Gerar e manter Sessão
     const generateSessionId = () => Date.now().toString(36) + Math.random().toString(36).substring(2);
     const sessionId = localStorage.getItem('site_session_id') || generateSessionId();
-    localStorage.setItem('site_session_id', sessionId); // Salva para não perder se atualizar a página
+    localStorage.setItem('site_session_id', sessionId);
     
-    // Heartbeat (Avisar o radar do servidor que o visitante está vivo)
+    // Heartbeat
     const sendHeartbeat = () => {
+        if (!window.API_BASE_URL) return;
         fetch(window.API_BASE_URL + '/api/track/ping', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sessionId, userAgent: navigator.userAgent })
         }).catch(()=>{});
     };
-    
-    sendHeartbeat(); // Primeiro envio imediato
-    setInterval(sendHeartbeat, 5000); // A cada 5 segundos
-    
-    // Buscar configurações ativas do Bot
-    fetch(window.API_BASE_URL + '/api/whatsapp')
-        .then(response => response.json())
-        .then(data => {
-            if(data.number) {
-                const formatPhoneNumber = (num) => {
-                    let str = num.replace(/\D/g, '');
-                    if (str.startsWith('55') && str.length >= 12) str = str.substring(2);
-                    if(str.length >= 10) {
-                        const ddd = str.substring(0,2);
-                        const prefix = str.length === 11 ? str.substring(2,7) : str.substring(2,6);
-                        const suffix = str.substring(str.length - 4);
-                        return `(${ddd}) ${prefix}-${suffix}`;
-                    }
-                    return num;
-                };
-                
-                const formattedNum = formatPhoneNumber(data.number);
+    sendHeartbeat(); setInterval(sendHeartbeat, 5000);
 
-                // Update visual text nodes that contain the old hardcoded number
-                const walkDom = (node) => {
-                    if(node.nodeType === 3) {
-                        const val = node.nodeValue;
-                        if(val.includes('96439') || val.includes('(11)')) {
-                            node.nodeValue = val
-                                .replace(/\(11\)\s*96439-?9707/g, formattedNum)
-                                .replace(/\(11\)\s*964399707/g, formattedNum)
-                                .replace(/11964399707/g, formattedNum)
-                                .replace(/96439-?9707/g, formattedNum);
-                        }
-                        if (data.location && (val.includes('Silva Lisboa') || val.includes('Nhocuné'))) {
-                            node.nodeValue = data.location;
-                        }
-                    } else if (node.nodeType === 1 && node.nodeName !== 'SCRIPT' && node.nodeName !== 'STYLE') {
-                        node.childNodes.forEach(walkDom);
-                    }
-                };
-                walkDom(document.body);
+    let botData = null;
+
+    // Função de formatação
+    const formatPhoneNumber = (num) => {
+        let str = num.replace(/\D/g, '');
+        if (str.startsWith('55') && str.length >= 12) str = str.substring(2);
+        if(str.length >= 10) {
+            return `(${str.substring(0,2)}) ${str.length === 11 ? str.substring(2,7) : str.substring(2,6)}-${str.substring(str.length - 4)}`;
+        }
+        return num;
+    };
+
+    // Atualiza textos estáticos de contato e endereço
+    const updateStaticText = () => {
+        if (!botData) return;
+        const formattedNum = formatPhoneNumber(botData.number);
+        const walkDom = (node) => {
+            if(node.nodeType === 3) {
+                const val = node.nodeValue;
+                if(val.includes('96439') || val.includes('(11)')) {
+                    node.nodeValue = val.replace(/\(11\)\s*96439-?9707/g, formattedNum).replace(/11964399707/g, formattedNum).replace(/96439-?9707/g, formattedNum);
+                }
+                if (botData.location && (val.includes('Silva Lisboa') || val.includes('Nhocuné'))) {
+                    node.nodeValue = botData.location;
+                }
+            } else if (node.nodeType === 1 && node.nodeName !== 'SCRIPT' && node.nodeName !== 'STYLE') {
+                node.childNodes.forEach(walkDom);
+                // Faz o endereço parecer clicável
+                if (node.textContent && botData.location && node.textContent.includes(botData.location) && node.tagName !== 'A' && node.textContent.length < 100) {
+                    node.style.cursor = 'pointer';
+                    node.title = 'Abrir no Google Maps';
+                }
             }
+        };
+        walkDom(document.body);
+    };
 
-            const links = document.querySelectorAll('a');
-            links.forEach(link => {
-                const originalHref = link.href.toLowerCase();
-                const isWhatsAppLink = originalHref.includes('whatsapp.com') || originalHref.includes('wa.me') || originalHref.includes('wa.link');
-                const isTelLink = originalHref.includes('tel:');
-                const isInstagramLink = originalHref.includes('instagram.com');
-                const isFacebookLink = originalHref.includes('facebook.com') || originalHref.includes('fb.com');
-                const isCategoryLink = originalHref.includes('/category/');
+    // Busca Dados do Servidor
+    fetch((window.API_BASE_URL || 'https://brinquedosemcasa.shardweb.app') + '/api/whatsapp')
+        .then(res => res.json())
+        .then(data => {
+            botData = data;
+            updateStaticText();
+            // Correção para Wix: Pode ser que os elementos mudem após hidratar
+            setTimeout(updateStaticText, 3000);
+        }).catch(e => console.error(e));
 
-                // Reportar Saída Social e Atualizar Links
-                if (isInstagramLink) {
-                    if(data.instagramUrl) link.href = data.instagramUrl;
-                    link.addEventListener('click', () => {
-                        fetch(window.API_BASE_URL + '/api/track/exit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sessionId, target: 'Instagram' }) }).catch(()=>{});
+    // OUVINTE GLOBAL DE CLIQUES (Resolve o problema de renderização dinâmica da Wix)
+    document.body.addEventListener('click', (e) => {
+        // 1. Verificar Clique em Endereço (Google Maps)
+        if (botData && botData.location) {
+            const targetText = (e.target.innerText || e.target.textContent || '').trim();
+            if (targetText.includes(botData.location) && targetText.length < 100) {
+                e.preventDefault(); e.stopPropagation();
+                window.open('https://maps.google.com/?q=' + encodeURIComponent(botData.location), '_blank');
+                return;
+            }
+        }
+
+        // 2. Envio de Formulário de Contato
+        const targetLower = (e.target.innerText || e.target.textContent || '').trim().toLowerCase();
+        const isSubmitBtn = targetLower === 'enviar' || e.target.value === 'Enviar' || (e.target.closest && e.target.closest('button') && e.target.closest('button').textContent.trim().toLowerCase() === 'enviar');
+        
+        if (isSubmitBtn && e.target.closest) {
+            const btn = e.target.closest('button') || e.target;
+            const formContainer = btn.closest('form') || (btn.parentElement ? btn.parentElement.parentElement : null);
+            if (formContainer && formContainer.querySelector('input')) {
+                const inputs = formContainer.querySelectorAll('input, textarea');
+                let leadData = { nome: '', sobrenome: '', email: '', telefone: '', mensagem: '' };
+                let hasData = false;
+
+                inputs.forEach(input => {
+                    const placeholder = (input.placeholder || '').toLowerCase();
+                    const val = input.value.trim();
+                    if (!val) return;
+                    if (placeholder.includes('nome') && !placeholder.includes('sobrenome')) { leadData.nome = val; hasData = true; }
+                    else if (placeholder.includes('sobrenome')) { leadData.sobrenome = val; hasData = true; }
+                    else if (placeholder.includes('email')) { leadData.email = val; hasData = true; }
+                    else if (placeholder.includes('telefone') || placeholder.includes('celular')) { leadData.telefone = val; hasData = true; }
+                    else if (input.tagName.toLowerCase() === 'textarea' || placeholder.includes('mensagem')) { leadData.mensagem = val; hasData = true; }
+                });
+
+                if (hasData) {
+                    e.preventDefault(); e.stopPropagation();
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(leadData.email)) { showToast("Por favor, insira um e-mail válido.", "error"); return; }
+                    const cleanPhone = leadData.telefone.replace(/\D/g, '');
+                    if (cleanPhone.length < 10 || cleanPhone.length > 11) { showToast("O telefone deve ter DDD + Número.", "error"); return; }
+                    if (!leadData.mensagem || leadData.mensagem.length < 10) { showToast("A mensagem deve ter pelo menos 10 caracteres.", "error"); return; }
+
+                    const oldText = btn.textContent;
+                    btn.textContent = 'Enviando...';
+                    btn.style.opacity = '0.7';
+
+                    fetch((window.API_BASE_URL || 'https://brinquedosemcasa.shardweb.app') + '/api/contact', {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(leadData)
+                    }).then(res => res.json()).then(resData => {
+                        if (!resData.success) {
+                            showToast(resData.error || "Dados inválidos.", "error");
+                            btn.textContent = oldText; btn.style.opacity = '1'; return;
+                        }
+                        showToast("Mensagem enviada com sucesso!");
+                        inputs.forEach(i => i.value = '');
+                        setTimeout(() => { btn.textContent = oldText; btn.style.opacity = '1'; }, 3000);
+                    }).catch(err => {
+                        showToast("Erro ao enviar mensagem.", "error");
+                        btn.textContent = oldText; btn.style.opacity = '1';
                     });
+                    return; // Finaliza processamento deste clique
                 }
-                
-                if (isFacebookLink) {
-                    if(data.facebookUrl) link.href = data.facebookUrl;
-                    link.addEventListener('click', () => {
-                        fetch(window.API_BASE_URL + '/api/track/exit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sessionId, target: 'Facebook' }) }).catch(()=>{});
-                    });
-                }
+            }
+        }
 
-                // Lógica original do WhatsApp
-                if (data.number && data.text) {
-                    let cleanPhone = data.number.replace(/\D/g, '');
-                    if (!cleanPhone.startsWith('55') && cleanPhone.length >= 10) {
-                        cleanPhone = '55' + cleanPhone;
-                    }
-                    const displayPhone = formatPhoneNumber(cleanPhone);
+        // Buscar Link Ancestral (se o clique for em um icone/texto dentro de tag A)
+        if (!e.target.closest) return;
+        const link = e.target.closest('a');
+        if (!link) return;
 
-                    if (isTelLink && link.textContent.match(/\d{4}/)) {
-                        link.href = `tel:+${cleanPhone}`;
-                        
-                        function replaceTextInNodes(node, newText) {
-                            if (node.nodeType === 3 && node.nodeValue.match(/\d{4}/)) {
-                                node.nodeValue = newText;
-                                return true;
-                            } else if (node.nodeType === 1) {
-                                for (let child of node.childNodes) {
-                                    if (replaceTextInNodes(child, newText)) return true;
-                                }
-                            }
-                            return false;
-                        }
-                        replaceTextInNodes(link, displayPhone);
-                    }
+        const href = (link.getAttribute('href') || '').toLowerCase();
+        const textContent = link.textContent.trim().toLowerCase();
 
-                    if (isWhatsAppLink || (isTelLink && link.textContent.match(/\d{4}/))) {
-                        link.addEventListener('click', (e) => {
-                            fetch(window.API_BASE_URL + '/api/track/exit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sessionId, target: 'WhatsApp' }) }).catch(()=>{});
+        // 3. Redes Sociais
+        if (href.includes('instagram.com') && botData && botData.instagramUrl) {
+            e.preventDefault(); e.stopPropagation();
+            fetch((window.API_BASE_URL || 'https://brinquedosemcasa.shardweb.app') + '/api/track/exit', { method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ sessionId, target: 'Instagram' }) }).catch(()=>{});
+            window.open(botData.instagramUrl, '_blank');
+            return;
+        }
+        if ((href.includes('facebook.com') || href.includes('fb.com')) && botData && botData.facebookUrl) {
+            e.preventDefault(); e.stopPropagation();
+            fetch((window.API_BASE_URL || 'https://brinquedosemcasa.shardweb.app') + '/api/track/exit', { method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ sessionId, target: 'Facebook' }) }).catch(()=>{});
+            window.open(botData.facebookUrl, '_blank');
+            return;
+        }
 
-                            if (isWhatsAppLink) {
-                                e.preventDefault();
-                                
-                                let contextInfo = document.title;
-                                let foundItem = null;
-                                
-                                let parent = link.parentElement;
-                                while(parent && parent !== document.body && !foundItem) {
-                                    const img = parent.querySelector('img[alt*="COMBO"], img[alt*="Combo"], img[alt*="Cama"], img[alt*="Piscina"]');
-                                    if(img && img.alt) {
-                                        foundItem = img.alt.replace('.png', '').replace('.jpg', '');
-                                        break;
-                                    }
-                                    const title = parent.querySelector('h1, h2, h3, h4');
-                                    if(title && title.textContent.trim().length > 3) {
-                                        foundItem = title.textContent.trim();
-                                        break;
-                                    }
-                                    parent = parent.parentElement;
-                                }
+        // 4. Categorias (Filtro Frontend Dinâmico)
+        const isCategoryLink = href.includes('/category/') || textContent.includes('todos os produtos');
+        if (isCategoryLink) {
+            e.preventDefault(); e.stopPropagation();
+            const keywords = {
+                'camas elásticas': ['cama', 'elástica'],
+                'infláveis': ['tobogã', 'castelinho', 'pula', 'inflável', 'jacaré', 'premium'],
+                'jogos e diversão': ['ping', 'vôlei', 'karaokê', 'disco', 'pebolim', 'basquete', 'fliperama', 'mesa', 'jogo', 'diversão', 'games'],
+                'piscina de bolinhas': ['piscina', 'bolinha']
+            };
+            let selectedKeywords = ['ALL'];
+            if (textContent.includes('cama')) selectedKeywords = keywords['camas elásticas'];
+            else if (textContent.includes('infl')) selectedKeywords = keywords['infláveis'];
+            else if (textContent.includes('jogo') || textContent.includes('divers')) selectedKeywords = keywords['jogos e diversão'];
+            else if (textContent.includes('piscina')) selectedKeywords = keywords['piscina de bolinhas'];
 
-                                if(!foundItem) {
-                                    const clickY = e.clientY;
-                                    const clickX = e.clientX;
-                                    const imgs = Array.from(document.querySelectorAll('img[alt]'));
-                                    let closestDist = Infinity;
-                                    for(const img of imgs) {
-                                        if (img.alt.length < 3 || img.alt.includes('bg') || img.alt.includes('logo')) continue;
-                                        const rect = img.getBoundingClientRect();
-                                        const dist = Math.abs(rect.bottom - clickY) + Math.abs(rect.left - clickX);
-                                        if(dist < closestDist && dist < 800) { 
-                                            closestDist = dist;
-                                            foundItem = img.alt.replace('.png', '').replace('.jpg', '');
-                                        }
-                                    }
-                                }
-
-                                let dynamicText = data.text;
-                                if(foundItem) {
-                                    dynamicText += `\n\n📌 Tenho interesse no item: ${foundItem}`;
-                                } else {
-                                    dynamicText += `\n\n📌 Origem: ${contextInfo}`;
-                                }
-
-                                const waLink = `https://api.whatsapp.com/send?phone=${data.number}&text=${encodeURIComponent(dynamicText)}`;
-                                window.open(waLink, '_blank');
-                            }
-                        });
-                        
-                        if(isWhatsAppLink) {
-                            link.href = "#";
-                        }
-                    }
-
-                    // The product link logic has been moved outside to a capturing listener
-
-
-                    // LÓGICA NOVO: Filtro de Categorias no Frontend
-                    if (isCategoryLink) {
-                        link.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-
-                            let categoryName = link.textContent.trim().toLowerCase();
-                            
-                            // Define keywords based on category names from the site
-                            const keywords = {
-                                'camas elásticas': ['cama', 'elástica'],
-                                'infláveis': ['tobogã', 'castelinho', 'pula', 'inflável', 'jacaré', 'premium'],
-                                'jogos e diversão': ['ping', 'vôlei', 'karaokê', 'disco', 'pebolim', 'basquete', 'fliperama', 'mesa', 'jogo', 'diversão'],
-                                'piscina de bolinhas': ['piscina', 'bolinha']
-                            };
-
-                            // Normalizar nomes no menu (se estiver escrito diferente)
-                            let selectedKeywords = [];
-                            if (categoryName.includes('all') || categoryName.includes('todos')) {
-                                selectedKeywords = ['ALL'];
-                            } else if (categoryName.includes('cama')) {
-                                selectedKeywords = keywords['camas elásticas'];
-                            } else if (categoryName.includes('infl')) {
-                                selectedKeywords = keywords['infláveis'];
-                            } else if (categoryName.includes('jogo') || categoryName.includes('divers')) {
-                                selectedKeywords = keywords['jogos e diversão'];
-                            } else if (categoryName.includes('piscina')) {
-                                selectedKeywords = keywords['piscina de bolinhas'];
-                            } else {
-                                selectedKeywords = ['ALL'];
-                            }
-
-                            // Get all products
-                            const products = document.querySelectorAll('[data-hook="product-list-grid-item"]');
-                            if (products.length > 0) {
-                                products.forEach(prod => {
-                                    if (selectedKeywords.includes('ALL')) {
-                                        prod.style.display = 'block';
-                                        return;
-                                    }
-
-                                    const productText = prod.textContent.toLowerCase();
-                                    const match = selectedKeywords.some(kw => productText.includes(kw));
-                                    if (match) {
-                                        prod.style.display = 'block';
-                                    } else {
-                                        prod.style.display = 'none';
-                                    }
-                                });
-
-                                // Estilizar o menu lateral para mostrar ativo
-                                document.querySelectorAll('a[href*="/category/"]').forEach(a => {
-                                    a.style.fontWeight = 'normal';
-                                    a.style.textDecoration = 'none';
-                                });
-                                link.style.fontWeight = 'bold';
-                                link.style.textDecoration = 'underline';
-                            } else {
-                                // Se os produtos ainda não carregaram, manda pro index com a categoria salva no hash
-                                window.location.href = '/' + link.getAttribute('href');
-                            }
-                        });
-                    }
-                }
-            });
-
-            // Captura Global para Links de Produtos (Garante que roda antes do Wix)
-            document.body.addEventListener('click', (e) => {
-                const link = e.target.closest('a');
-                if (!link) return;
-                
-                const originalHref = link.href.toLowerCase();
-                const isProductLink = originalHref.includes('product-page');
-                
-                if (isProductLink && data.number && data.text) {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    let productName = null;
-                    const texts = link.querySelectorAll('h1, h2, h3, h4, p, span');
-                    for (const t of texts) {
-                        const val = t.textContent.trim();
-                        if (val.length > 3 && !val.includes('R$') && !val.toLowerCase().includes('produto')) {
-                            productName = val;
-                            break;
-                        }
-                    }
-
-                    if (!productName) {
-                        const img = link.querySelector('img[alt]');
-                        if (img && img.alt.length > 3 && !img.alt.includes('bg')) {
-                            productName = img.alt.replace('.png', '').replace('.jpg', '');
-                        }
-                    }
-
-                    if (!productName) {
-                        let parent = link.parentElement;
-                        for (let i = 0; i < 4; i++) {
-                            if (!parent) break;
-                            const siblingTexts = parent.querySelectorAll('h1, h2, h3, h4, p, span');
-                            for (const t of siblingTexts) {
-                                const val = t.textContent.trim();
-                                if (val.length > 3 && !val.includes('R$') && !val.toLowerCase().includes('produto')) {
-                                    productName = val;
-                                    break;
-                                }
-                            }
-                            if (productName) break;
-                            parent = parent.parentElement;
-                        }
-                    }
-
-                    if (!productName) productName = "um Produto do Catálogo";
-
-                    let dynamicText = data.text + `\n\n📌 Tenho interesse no item: ${productName}`;
-                    const waLink = `https://api.whatsapp.com/send?phone=${data.number}&text=${encodeURIComponent(dynamicText)}`;
-                    
-                    fetch(window.API_BASE_URL + '/api/track/exit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sessionId, target: `WhatsApp (${productName})` }) }).catch(()=>{});
-                    
-                    window.open(waLink, '_blank');
-                }
-            }, true);
-
-            // Lógica de Captura de Leads (Formulário de Contato)
-            const sendButtons = Array.from(document.querySelectorAll('button, a')).filter(el => 
-                el.textContent && el.textContent.trim().toLowerCase() === 'enviar'
-            );
-
-            sendButtons.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const formContainer = btn.closest('form') || btn.parentElement.parentElement;
-                    if (!formContainer) return;
-
-                    const inputs = formContainer.querySelectorAll('input, textarea');
-                    let leadData = { nome: '', sobrenome: '', email: '', telefone: '', mensagem: '' };
-                    let hasData = false;
-
-                    inputs.forEach(input => {
-                        const placeholder = (input.placeholder || '').toLowerCase();
-                        const val = input.value.trim();
-                        if (!val) return;
-
-                        if (placeholder.includes('nome') && !placeholder.includes('sobrenome')) { leadData.nome = val; hasData = true; }
-                        else if (placeholder.includes('sobrenome')) { leadData.sobrenome = val; hasData = true; }
-                        else if (placeholder.includes('email')) { leadData.email = val; hasData = true; }
-                        else if (placeholder.includes('telefone') || placeholder.includes('celular')) { leadData.telefone = val; hasData = true; }
-                        else if (input.tagName.toLowerCase() === 'textarea' || placeholder.includes('mensagem')) { leadData.mensagem = val; hasData = true; }
-                    });
-
-                    if (hasData) {
-                        e.preventDefault(); 
-                        e.stopPropagation();
-
-                        // Validações no Frontend
-                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                        if (!emailRegex.test(leadData.email)) {
-                            alert("Por favor, insira um e-mail válido.");
-                            return;
-                        }
-
-                        const cleanPhone = leadData.telefone.replace(/\D/g, '');
-                        if (cleanPhone.length < 10 || cleanPhone.length > 11) {
-                            alert("O telefone deve ter DDD + Número (Ex: 11999999999).");
-                            return;
-                        }
-
-                        if (!leadData.mensagem || leadData.mensagem.length < 10 || leadData.mensagem.length > 1000) {
-                            alert("A mensagem deve ter entre 10 e 1000 caracteres.");
-                            return;
-                        }
-
-                        btn.textContent = 'Enviando...';
-                        btn.style.opacity = '0.7';
-
-                        fetch(window.API_BASE_URL + '/api/contact', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(leadData)
-                        })
-                        .then(res => res.json())
-                        .then(resData => {
-                            if (!resData.success) {
-                                alert("Erro: " + (resData.error || "Dados inválidos."));
-                                btn.textContent = 'Enviar';
-                                btn.style.opacity = '1';
-                                return;
-                            }
-                            btn.textContent = 'Enviado com Sucesso!';
-                            btn.style.backgroundColor = '#4CAF50';
-                            inputs.forEach(i => i.value = ''); 
-                            setTimeout(() => {
-                                btn.textContent = 'Enviar';
-                                btn.style.opacity = '1';
-                                btn.style.backgroundColor = '';
-                            }, 3000);
-                        })
-                        .catch(err => {
-                            console.error('Erro', err);
-                            btn.textContent = 'Erro';
-                            setTimeout(() => { btn.textContent = 'Enviar'; btn.style.opacity = '1'; }, 3000);
-                        });
+            const products = document.querySelectorAll('[data-hook="product-list-grid-item"]');
+            if (products.length > 0) {
+                products.forEach(prod => {
+                    if (selectedKeywords[0] === 'ALL') { prod.style.display = 'block'; return; }
+                    const pText = prod.textContent.toLowerCase();
+                    const match = selectedKeywords.some(kw => pText.includes(kw));
+                    prod.style.display = match ? 'block' : 'none';
+                });
+                // Update bold state
+                document.querySelectorAll('a').forEach(a => {
+                    if((a.getAttribute('href')||'').includes('/category/') || a.textContent.toLowerCase().includes('todos os produtos')) {
+                        a.style.fontWeight = 'normal'; a.style.textDecoration = 'none';
                     }
                 });
-            });
+                link.style.fontWeight = 'bold'; link.style.textDecoration = 'underline';
+            } else if (window.location.pathname.length > 2 && window.location.pathname !== '/catalogo') {
+                window.location.href = '/' + (href.startsWith('/') ? href.substring(1) : href);
+            }
+            return;
+        }
 
-        })
-        .catch(err => console.error('Erro:', err));
+        // 5. WhatsApp (Produtos, Combos e Direto)
+        const isProductLink = href.includes('product-page') || href.includes('#product-page') || textContent.includes('reservar agora');
+        const isWhatsAppDirect = href.includes('whatsapp.com') || href.includes('wa.me') || href.includes('wa.link');
+        const isTelLink = href.includes('tel:');
+        
+        if ((isProductLink || isWhatsAppDirect || isTelLink) && botData && botData.number && botData.text) {
+            e.preventDefault(); e.stopPropagation();
+
+            let foundItem = null;
+            
+            // Tenta encontrar o nome do produto/combo subindo a árvore
+            let parent = e.target;
+            while (parent && parent !== document.body && !foundItem) {
+                // Procura um Combo pelo texto
+                const texts = parent.querySelectorAll('h1, h2, h3, h4, span, p');
+                for (const t of texts) {
+                    const val = t.textContent.trim();
+                    if (val.toUpperCase().includes('COMBO') && val.length < 15) {
+                        foundItem = val.toUpperCase();
+                        break;
+                    }
+                    if (isProductLink && val.length > 3 && !val.includes('R$') && !val.toLowerCase().includes('produto') && !val.toLowerCase().includes('reservar')) {
+                        foundItem = val;
+                        break; // Pega o primeiro título grande válido
+                    }
+                }
+                
+                // Procura na imagem do contexto
+                if (!foundItem) {
+                    const img = parent.querySelector('img[alt]');
+                    if (img && img.alt && img.alt.length > 3 && !img.alt.includes('bg') && !img.alt.includes('logo')) {
+                        foundItem = img.alt.replace('.png', '').replace('.jpg', '');
+                    }
+                }
+                
+                parent = parent.parentElement;
+            }
+
+            if (!foundItem) foundItem = document.title || "Catálogo";
+
+            let dynamicText = botData.text;
+            if(isProductLink || textContent.includes('reservar')) {
+                dynamicText += `\n\n📌 Tenho interesse no item: ${foundItem}`;
+            } else if (!isTelLink) {
+                dynamicText += `\n\n📌 Origem: ${foundItem}`;
+            }
+
+            const cleanPhone = botData.number.replace(/\D/g, '');
+            const phoneNum = cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone;
+            
+            fetch((window.API_BASE_URL || 'https://brinquedosemcasa.shardweb.app') + '/api/track/exit', { method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ sessionId, target: `WhatsApp (${foundItem})` }) }).catch(()=>{});
+            
+            if (isTelLink && !isWhatsAppDirect && !isProductLink) {
+                window.location.href = `tel:+${phoneNum}`;
+            } else {
+                const waLink = `https://api.whatsapp.com/send?phone=${phoneNum}&text=${encodeURIComponent(dynamicText)}`;
+                window.open(waLink, '_blank');
+            }
+        }
+
+    }, true); // useCapture = true para pegar antes do Wix bloquear
 });
